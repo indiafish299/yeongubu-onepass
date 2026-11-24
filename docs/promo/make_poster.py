@@ -30,6 +30,8 @@ body{{background:var(--paper);font-size:30px}}
 .chips span{{font-size:26px;border-radius:99px;padding:8px 20px;background:var(--card);border:2px solid var(--line)}}
 .foot{{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:26px;color:var(--mut)}}
 .foot b{{font-family:var(--logo);font-size:34px;color:var(--tag);font-weight:400}}
+/* 포스터(정지 그림)에는 「패스!」 뒤 바닥에 떨어진 담뱃갑을 보인다 */
+.boss .b-pack{{animation:none!important;opacity:1!important;transform:translate(33px,62px) rotate(270deg)!important}}
 </style>
 <div class="pz">
   <div class="top">

@@ -1,0 +1,13 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.pdf
+*.hwp
+*.hwpx
+*.png
+answers*.json
+report.json
+report.html
+profile.json

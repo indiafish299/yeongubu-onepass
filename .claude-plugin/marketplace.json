@@ -1,0 +1,15 @@
+{
+  "name": "school-exam",
+  "owner": {
+    "name": "exam-tools"
+  },
+  "description": "선생님용 시험지(원안) 제작·검증 도구",
+  "plugins": [
+    {
+      "name": "exam-tools",
+      "source": "./plugins/exam-tools",
+      "description": "처음 준비(exam-setup), 원안 제작(exam-paper), 시험지 검증(exam-verify)",
+      "version": "2.0.0"
+    }
+  ]
+}

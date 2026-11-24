@@ -2,10 +2,11 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* 레이아웃: 시험지 한 장처럼 — 좁은 본문 단, 형광펜 줄이 핵심 낱말을 긋는다 */
+/* 레이아웃: 감사 문서처럼 — 차가운 종이, 남색 잉크, 검증 표시는 초록, 강조만 형광펜 */
 :root{
-  --paper:#fbfbf7; --ink:#1f2a37; --mut:#5d6673; --line:#d9dccf; --card:#ffffff;
-  --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
+  --paper:#f5f7fa; --ink:#14202e; --mut:#4f5b69; --line:#d6dce4; --card:#ffffff;
+  --pen:#fff06a; --pen-ink:#14202e; --accent:#183b5c; --ok:#1f6f4a; --warn:#9a5b00;
+  --gate:#14202e; --gate-ink:#ffffff;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
   --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c4abc9; --fleece2:#1f1f22; --inner:#c9cdd0; --tag:#c8342b;
@@ -14,10 +15,40 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
-  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; color-scheme:dark}}
+  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; --gate:#e8eae4; --gate-ink:#14202e; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
-  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; color-scheme:dark}
+  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; --gate:#e8eae4; --gate-ink:#14202e; color-scheme:dark}
+/* 검증·보안 */
+.trust{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.trust li{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 10px 8px 30px;font-size:.84rem;color:var(--mut);position:relative;line-height:1.45}
+.trust li::before{content:"";position:absolute;left:10px;top:12px;width:12px;height:12px;border-radius:3px;background:var(--ok);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/12px no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/12px no-repeat}
+.trust b{display:block;color:var(--ink);font-size:.92rem}
+.sec-label{font:600 .75rem/1 var(--mono);letter-spacing:.14em;color:var(--ok);margin-bottom:8px}
+.flow{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:14px}
+.flow li{position:relative;padding:8px 0 12px 30px;color:var(--mut);font-size:.95rem}
+.flow li b{display:block;color:var(--ink)}
+.flow .no{position:absolute;left:-15px;top:8px;min-width:28px;height:28px;padding:0 6px;border-radius:14px;background:var(--card);border:2px solid var(--accent);
+  color:var(--accent);font:700 .8rem/24px var(--mono);text-align:center}
+.flow li.gate{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:6px 0 10px 18px;padding:12px 14px 12px 50px}
+.flow li.gate .no{left:-33px;top:12px;background:var(--gate);border-color:var(--gate);color:var(--gate-ink);font-size:.72rem;padding:0 8px;width:auto}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.facts div{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;font-size:.92rem;color:var(--mut)}
+.facts b{display:block;color:var(--ink);font-family:var(--body)}
+.dataflow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:14px;overflow:hidden}
+.dataflow svg{display:block;width:100%;height:auto}
+.df-box{fill:none;stroke:var(--ink);stroke-width:1.6} .df-box.ai{stroke-dasharray:6 5}
+.df-h{font:700 14px var(--body);fill:var(--ink)}
+.df-item rect{fill:var(--paper);stroke:var(--line)} .df-item text,.df-no text{font:12.5px var(--body);fill:var(--ink)}
+.df-no rect{fill:var(--paper);stroke:var(--tag);stroke-dasharray:4 3} .df-no path{stroke:var(--tag);stroke-width:2.4;stroke-linecap:round}
+.df-arrow{stroke:var(--ok);stroke-width:3;stroke-dasharray:7 5} .df-head{fill:var(--ok)}
+.df-small{font:12px var(--body);fill:var(--mut)}
+.sec-table{border-collapse:collapse;width:100%;font-size:.94rem;margin-bottom:8px}
+.sec-table th{width:72px;text-align:left;vertical-align:top;padding:9px 10px;border-top:1px solid var(--line);color:var(--ok);font:600 .82rem var(--mono);letter-spacing:.06em}
+.sec-table td{padding:9px 10px;border-top:1px solid var(--line);color:var(--mut)}
+.sec-table code{font:.85em var(--mono);background:var(--paper);padding:1px 5px;border-radius:4px}
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font:17px/1.75 var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
@@ -123,13 +154,6 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss .blush{fill:var(--blush)} .boss .shine{fill:#ffffff} .boss .mouth{fill:var(--mouth)}
 .boss .b-eye{transform-box:view-box}
 .boss{overflow:hidden;padding-top:4px}
-/* 줄인 판: 첫 화면 칩, 본교 맞춤 요점 */
-header .chips{display:flex;flex-wrap:wrap;gap:8px}
-header .chips span{font-size:.9rem;border:1px solid var(--line);background:var(--card);border-radius:99px;padding:4px 12px}
-.badge{font-family:var(--logo);font-size:.95rem;color:#ffffff;background:var(--tag);border-radius:99px;padding:2px 12px;vertical-align:middle;margin-right:6px}
-.pts{margin:0;padding:0;list-style:none;display:grid;gap:8px}
-.pts li{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pen);border-radius:10px;padding:10px 14px;color:var(--mut);font-size:.97rem}
-.pts b{color:var(--ink);margin-right:6px}
 /* 본교 맞춤 */
 .fit{display:grid;gap:16px}
 .fit-badge{justify-self:start;font-family:var(--logo);font-size:1rem;color:#ffffff;background:var(--tag);border-radius:99px;padding:3px 14px}
@@ -219,7 +243,13 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
       </g>
     </svg>
   </h1>
-  <p class="lead">만드신 원안을 <span class="pen">여러 AI가 정답 없이 직접 풀어 보고</span>, 다시 볼 문항만 알려 드립니다. Claude에게 말로 부탁만 하세요.</p>
+  <p class="lead">만드신 원안을 <span class="pen">여러 AI가 정답 없이 따로 풀고, 서로 반박</span>하게 한 뒤 사람이 다시 볼 문항만 남깁니다. 원본·정답·보고서는 선생님 PC에만 둡니다.</p>
+  <ul class="trust" aria-label="검증과 보안 요약">
+    <li><b>정답 비공개</b>AI는 끝까지 정답을 못 봄</li>
+    <li><b>교차 반박</b>다른 회사 모델이 반박</li>
+    <li><b>자동 가림</b>학교·출제자·결재란</li>
+    <li><b>관문 2개</b>보내기·정답표는 사람이 확인</li>
+  </ul>
   </div>
   <div class="boss" role="img" aria-label="연보라 복슬 후리스를 입고 약간 곱슬한 바가지 머리에 환하게 웃는 연구부장님이 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
     <svg viewBox="0 0 220 290">
@@ -292,47 +322,173 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
     </svg>
   </div>
   </div>
-  <div class="chips">
-    <span>본교 원안 양식 그대로</span><span>AI 여럿이 정답 없이 풀어 봄</span><span>시험지는 내 PC에만</span>
+  <div class="stage" role="img" aria-label="정답에 형광펜이 그어지고, AI 검토자 네 명이 시험지를 풀어 확인 표시를 하고, 다시 볼 문항이 적힌 보고서가 나오는 그림">
+    <svg viewBox="0 0 640 260">
+      <rect class="sheet" x="14" y="14" width="196" height="232" rx="6"/>
+      <text x="30" y="42" font-size="13" font-weight="700">2학기 기말 원안</text>
+      <line class="rule" x1="30" y1="64" x2="190" y2="64"/>
+      <line class="rule" x1="30" y1="82" x2="170" y2="82"/>
+      <text x="30" y="112" font-size="13">① ㄱ</text><text x="88" y="112" font-size="13">② ㄴ</text>
+      <rect class="hl" x="142" y="98" width="22" height="18" rx="3"/>
+      <text x="146" y="112" font-size="13">③ ㄷ</text>
+      <line class="rule" x1="30" y1="140" x2="190" y2="140"/>
+      <line class="rule" x1="30" y1="158" x2="150" y2="158"/>
+      <text x="30" y="188" font-size="13">① 옳지 <tspan text-decoration="underline" font-weight="700">않은</tspan> 것은?</text>
+      <line class="rule" x1="30" y1="212" x2="180" y2="212"/>
+      <text class="m" x="30" y="236" font-size="11">정답 = 형광펜 (인쇄 안 됨)</text>
+
+      <g class="rev"><rect x="250" y="30" width="150" height="40" rx="8"/><text x="264" y="55" font-size="13">AI 검토자 1</text><path class="tick" d="M370 50 l7 7 l13 -15"/></g>
+      <g class="rev rev2"><rect x="250" y="82" width="150" height="40" rx="8"/><text x="264" y="107" font-size="13">AI 검토자 2</text><path class="tick" d="M370 102 l7 7 l13 -15"/></g>
+      <g class="rev rev3"><rect x="250" y="134" width="150" height="40" rx="8"/><text x="264" y="159" font-size="13">AI 검토자 3</text><path class="tick" d="M370 154 l7 7 l13 -15"/></g>
+      <g class="rev rev4"><rect x="250" y="186" width="150" height="40" rx="8"/><text x="264" y="211" font-size="13">AI 검토자 4</text><path class="tick" d="M370 206 l7 7 l13 -15"/></g>
+      <text class="m" x="252" y="246" font-size="11">정답을 모른 채 따로 풀어 봄</text>
+
+      <g class="report">
+        <rect x="440" y="44" width="186" height="172" rx="8"/>
+        <text x="456" y="72" font-size="14" font-weight="700">한눈에</text>
+        <text x="456" y="102" font-size="12">정답표와 다른 답: 없음</text>
+        <rect class="flag" x="452" y="116" width="164" height="22" rx="4"/>
+        <text x="456" y="132" font-size="12" font-weight="700">꼭 다시 볼 문항: 7번</text>
+        <text x="456" y="162" font-size="12">가볍게 볼 문항: 12번</text>
+        <text class="m" x="456" y="196" font-size="11">최종 판단은 선생님이</text>
+      </g>
+    </svg>
+    <div class="cap"><span>① 원안에 정답 형광펜</span><span>② AI 여럿이 따로 풀기</span><span>③ 다시 볼 문항 보고서</span></div>
   </div>
 </header>
 
-<section id="fit">
-  <h2><span class="badge">본교 맞춤</span> 본교 원안 양식에 그대로 맞췄습니다</h2>
-  <ul class="pts">
-    <li><b>양식 그대로</b> 지난 원안을 틀로: 머리 표·결재란·배점안내, B4 2단, 학교 글꼴·자간</li>
-    <li><b>정답 형광펜</b> 종이 인쇄엔 안 나와 원안 한 부로 바로 제출</li>
-    <li><b>「옳지 <u>않은</u>」·선지 간격</b> '않은'만 밑줄·굵게, 두 줄 선지는 본문 줄 간격으로</li>
-    <li><b>검증도 본교 양식으로</b> 머리 표·결재란 자동 가림, 본교 정답·배점표로 대조</li>
-  </ul>
+<section id="rigor">
+  <div class="sec-label">VERIFY · 검증 절차</div>
+  <h2>정답을 숨긴 채, 여러 번 따져 봅니다</h2>
+  <ol class="flow">
+    <li class="gate"><span class="no">관문 1</span><b>보내도 되는지 사람이 확인</b>가린 쪽 이미지와 글자를 선생님이 보고 승인. 그림이 바뀌면 승인은 무효</li>
+    <li><span class="no">1</span><b>풀이</b>모델마다 따로, 수험생처럼 끝까지 풀기. 서로의 답은 못 봄</li>
+    <li><span class="no">2</span><b>흠잡기</b>복수 정답·정답 없음·조건 부족·두 가지로 읽히는 문장</li>
+    <li><span class="no">3</span><b>범위</b>출제 범위·교과서 수준을 벗어난 문항</li>
+    <li><span class="no">4</span><b>교정</b>글자 층을 한 글자씩 읽어 오탈자 찾기</li>
+    <li><span class="no">5</span><b>반박</b>지적마다 다른 회사 모델이 반박. 버틴 지적만 남김</li>
+    <li class="gate"><span class="no">관문 2</span><b>정답표는 사람이 확인</b>선생님이 확인한 정답표로 스크립트가 대조(모델에게는 주지 않음)</li>
+    <li><span class="no">6</span><b>보고서</b>「꼭 다시 볼 문항」부터. 여러 모델이 함께 짚은 지적을 먼저</li>
+  </ol>
+  <div class="facts">
+    <div><b>격리</b>모델은 가린 쪽 이미지 폴더만 읽을 수 있습니다. 다른 파일·명령·웹을 쓰면 그 실행은 「격리 위반」으로 버립니다.</div>
+    <div><b>빠짐 표시</b>모델 하나라도 빠지면 보고서 맨 위에 「검증 불완전」. 다시 돌리면 빠진 단계만 이어 갑니다.</div>
+    <div><b>고친 뒤엔 전체 재검증</b>큰 오류가 같은 문항의 작은 흠을 가리기 때문에, 바뀐 문항만이 아니라 처음부터 다시 돌리고 지난 결과와 견줍니다.</div>
+    <div><b>요금제에 맞춘 검토자</b>Claude만 있으면 2명, ChatGPT·Gemini가 있으면 3~4명. 회사가 다를수록 더 엄밀합니다.</div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="sec-label">SECURE · 시험지 보안</div>
+  <h2>무엇이 PC에 남고, 무엇만 나가는지</h2>
+  <div class="dataflow" role="img" aria-label="선생님 PC에는 원본 원안, 정답표, 보고서가 남고, AI에는 학교명과 출제자를 가리고 정답 표시를 지운 쪽 이미지와 글자만 갑니다. 정답은 보내지 않습니다.">
+    <svg viewBox="0 0 640 210">
+      <rect class="df-box" x="8" y="20" width="250" height="170" rx="12"/>
+      <text class="df-h" x="24" y="48">선생님 PC (보관)</text>
+      <g class="df-item"><rect x="24" y="64" width="218" height="28" rx="6"/><text x="36" y="83">원본 원안 (hwp·pdf)</text></g>
+      <g class="df-item"><rect x="24" y="100" width="218" height="28" rx="6"/><text x="36" y="119">정답표 · 채점 기준</text></g>
+      <g class="df-item"><rect x="24" y="136" width="218" height="28" rx="6"/><text x="36" y="155">검증 보고서</text></g>
+      <path class="df-arrow" d="M266 105h96"/><path class="df-head" d="M362 97l12 8-12 8z"/>
+      <text class="df-small" x="272" y="92">가린 쪽 이미지</text><text class="df-small" x="272" y="128">+ 글자 층만</text>
+      <rect class="df-box ai" x="382" y="20" width="250" height="170" rx="12"/>
+      <text class="df-h" x="398" y="48">AI 검토자 (구독 계정)</text>
+      <g class="df-item"><rect x="398" y="64" width="218" height="28" rx="6"/><text x="410" y="83">학교명·출제자·결재란 가림</text></g>
+      <g class="df-item"><rect x="398" y="100" width="218" height="28" rx="6"/><text x="410" y="119">정답 형광 표시 지움</text></g>
+      <g class="df-no"><rect x="398" y="136" width="218" height="28" rx="6"/><text x="410" y="155">정답표는 보내지 않음</text><path d="M592 142l12 12M604 142l-12 12"/></g>
+    </svg>
+  </div>
+  <table class="sec-table">
+    <tr><th>보관</th><td>시험지·정답·보고서는 선생님 PC(<code>~/.exam-tools/work</code>)에만. 메신저·공유 드라이브·메일로 보내지 않습니다.</td></tr>
+    <tr><th>가림</th><td>AI로 보내기 전 머리 표·결재란·저작권 줄을 자동으로 찾아 가리고, 가린 뒤에도 남은 이름이 있으면 경고합니다.</td></tr>
+    <tr><th>확인</th><td>보내기(관문 1)와 정답표(관문 2)는 선생님이 직접 확인해야만 다음 단계로 넘어갑니다.</td></tr>
+    <tr><th>원본</th><td>원본 파일은 덮어쓰지 않고, 고친 것은 새 이름으로 저장합니다.</td></tr>
+    <tr><th>지우기</th><td>선생님이 「지워」라고 할 때만, 결과와 AI 쪽 대화 기록까지 함께 지웁니다.</td></tr>
+    <tr><th>계정</th><td>비밀번호는 Claude가 대신 넣지 않습니다. 로그인은 선생님이 브라우저에서 직접.</td></tr>
+  </table>
+  <p class="note">다른 회사 AI(ChatGPT·Gemini)를 쓰면 가린 쪽 이미지가 그 회사로 갑니다. 쓸지 말지는 처음 준비할 때 선생님이 정합니다.</p>
+</section>
+
+<section id="fit" class="fit">
+  <div class="fit-badge">본교 맞춤</div>
+  <h2>본교 시험지 원안 양식에 <span class="pen">그대로 맞췄습니다</span></h2>
+  <p class="lead2">일반 AI 도구는 아무 시험지 모양으로 만듭니다. 원패스는 본교 원안 양식을 기준으로, 만드는 것도 검증하는 것도 본교 원안에 맞춰 돌아갑니다. 따로 고칠 일이 거의 없습니다.</p>
+  <div class="fit-grid">
+    <div class="fit-sheet" role="img" aria-label="본교 원안 한 장에서 맞춘 곳: 머리 표와 결재란, 2단 배치, 정답 형광펜, 옳지 않은의 밑줄과 굵게, 선지 줄 간격, 꼬리말">
+      <svg viewBox="0 0 300 380">
+        <rect class="fs-page" x="6" y="6" width="288" height="368" rx="6"/>
+        <rect class="fs-head" x="20" y="20" width="260" height="46" rx="3"/>
+        <path class="fs-rule" d="M20 36h260M80 20v46M140 20v46M200 20v46"/>
+        <line class="fs-col" x1="150" y1="78" x2="150" y2="330"/>
+        <path class="fs-txt" d="M24 86h112M24 96h96M24 120h112M24 130h80"/>
+        <rect class="fs-pen" x="24" y="148" width="14" height="10" rx="2"/>
+        <path class="fs-txt" d="M42 153h20M70 153h20M98 153h20M24 168h20M52 168h20"/>
+        <path class="fs-txt" d="M24 196h60"/><path class="fs-ul" d="M88 199h18"/><path class="fs-txt" d="M110 196h26"/>
+        <path class="fs-txt" d="M164 86h112M164 96h100M164 110h112M164 120h90M164 150h112M164 160h70"/>
+        <path class="fs-txt" d="M164 186h20M192 186h20M220 186h20M164 201h20M192 201h20"/>
+        <path class="fs-foot" d="M60 350h180"/>
+        <g class="fs-tags">
+          <g><circle cx="282" cy="28" r="9"/><text x="282" y="32">1</text></g>
+          <g><circle cx="150" cy="248" r="9"/><text x="150" y="252">2</text></g>
+          <g><circle cx="16" cy="153" r="9"/><text x="16" y="157">3</text></g>
+          <g><circle cx="97" cy="212" r="9"/><text x="97" y="216">4</text></g>
+          <g><circle cx="284" cy="194" r="9"/><text x="284" y="198">5</text></g>
+          <g><circle cx="250" cy="350" r="9"/><text x="250" y="354">6</text></g>
+        </g>
+      </svg>
+    </div>
+    <ol class="fit-list">
+      <li><b>머리 표·결재란·배점안내</b>지난 원안 파일을 그대로 틀로 써서 회차·날짜·교시만 바꿉니다.</li>
+      <li><b>B4 2단, 문항이 단을 넘지 않게</b>학교 글꼴·장평·자간과 어절 줄바꿈, 외톨이 줄·벌어진 줄을 자동으로 다듬습니다.</li>
+      <li><b>정답은 형광펜</b>종이 인쇄에는 안 나와서 원안 한 부로 바로 제출할 수 있습니다.</li>
+      <li><b>「옳지 <u>않은</u>」</b>'않은'에만 밑줄과 굵게.</li>
+      <li><b>선지 줄 간격</b>①~⑤ 두 줄 선지를 본문 줄과 비슷하게(5.6mm) 넓힙니다.</li>
+      <li><b>면수·꼬리말·배점 합 100</b>배점안내의 면수와 실제 면수, 총 문항 수가 맞는지 확인합니다.</li>
+    </ol>
+  </div>
+  <div class="fit-more">
+    <div><b>검증도 본교 원안에 맞춰</b>머리 표·결재란·저작권 줄을 자동으로 찾아 가리고, 형광펜 정답을 지운 뒤 AI에게 보냅니다. 본교 정답·배점표를 그대로 읽어 정답과 대조합니다.</div>
+    <div><b>제출 서류까지</b>정답·배점표, 이원목적분류표, 나이스 문항정보표 입력용 표를 본교 양식으로 함께 만듭니다.</div>
+  </div>
 </section>
 
 <section id="start">
-  <h2>설치는 세 단계</h2>
+  <h2>선생님이 하실 일은 세 가지입니다</h2>
   <ol class="steps">
-    <li><div><h3>Claude 앱 설치·로그인</h3><p><a href="https://claude.ai/download">claude.ai/download</a> (유료 요금제) → 왼쪽 위 <b>Code</b> 탭</p></div></li>
     <li><div>
-      <h3>한 줄 붙여 넣고 Enter → 「허용」</h3>
+      <h3>Claude 앱을 설치하고 로그인합니다</h3>
+      <p><a href="https://claude.ai/download">claude.ai/download</a>에서 내 컴퓨터(윈도우·맥)용을 받아 설치합니다. Claude 유료 요금제(Pro 이상)가 필요합니다. 앱을 열고 왼쪽 위의 <b>Code</b> 탭을 누릅니다.</p>
+    </div></li>
+    <li><div>
+      <h3>아래 한 줄을 복사해 Claude에게 붙여 넣습니다</h3>
+      <p>Code 화면 입력 칸에 붙여 넣고 Enter. 나머지는 Claude가 <span class="pen">알아서 설치</span>합니다(윈도우·맥 모두, 1~5분). 「실행해도 될까요?」라고 물으면 <b>허용</b>을 누르세요.</p>
       <div class="cmd"><code id="c1">연구부 원패스 설치해 줘. 윈도우는 irm https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.ps1 | iex , 맥은 curl -fsSL https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.sh | bash 를 실행하면 돼.</code><button type="button" data-copy="c1">복사</button></div>
     </div></li>
-    <li><div><h3>앱을 다시 열고 「원패스 준비해 줘」</h3><p>로그인 창이 뜨면 로그인만 해 주세요.</p></div></li>
+    <li><div>
+      <h3>앱을 다시 열고 「원패스 준비해 줘」라고 말합니다</h3>
+      <p>설치가 끝나면 Claude 앱을 껐다 켭니다. 「원패스 준비해 줘」라고 하면 쓰시는 AI를 확인하고 검토자를 골라 둡니다. 브라우저 로그인 창이 뜨면 선생님 계정으로 로그인만 해 주세요(비밀번호는 Claude가 대신 넣지 않습니다).</p>
+    </div></li>
   </ol>
 </section>
 
 <section>
-  <h2>이렇게 말하면 됩니다</h2>
+  <h2>그다음엔 이렇게 말하면 됩니다</h2>
   <div class="say">
-    <div><b>검증</b>「이 원안 검토해 줘. 정답·배점표는 이 파일이야.」</div>
-    <div><b>원안 만들기</b>「기말고사 원안 만들어 줘. 지난 원안은 이거야.」</div>
+    <div><b>원안 만들기</b>「2학기 기말고사 원안 만들어 줘. 지난 원안 파일은 이거야.」</div>
+    <div><b>시험지 검증</b>「이 원안 검증해 줘. 정답·배점표는 이 파일이야.」</div>
+    <div><b>고치기</b>「10번 ㄷ 문장 자연스럽게 고쳐 줘. 정답은 그대로.」</div>
+    <div><b>확인</b>「고친 쪽을 그림으로 보여 줘.」</div>
   </div>
-  <p class="note">검증은 30분~1시간. 결과는 「꼭 다시 볼 문항」 목록으로 드립니다. 최종 판단은 선생님이 합니다.</p>
 </section>
 
 <section>
   <h2>자주 묻는 질문</h2>
-  <details><summary>Claude 말고 다른 AI 요금제도 있어야 하나요?</summary><p>Claude만 있어도 됩니다. ChatGPT·Gemini가 있으면 검토자가 늘어 더 믿을 만합니다.</p></details>
-  <details><summary>PDF로 저장하면 정답이 보여요.</summary><p>형광펜은 종이 인쇄에는 안 나오지만 PDF에는 찍힙니다. 학생용은 종이 인쇄로만 쓰세요.</p></details>
-  <details><summary>설치가 안 되거나 멈췄어요.</summary><p>「원패스 준비가 안 돼」 또는 「검증 이어서 해 줘」라고 말하면 Claude가 점검하고 이어 합니다. 설치 한 줄은 다시 붙여 넣어도 됩니다.</p></details>
+  <details><summary>한글(한컴오피스)이 없어도 되나요?</summary><p>검증은 한글에서 저장한 PDF만 있으면 됩니다. 원안을 한글 양식에 조립하는 것은 한글이 설치된 윈도우 PC에서 합니다.</p></details>
+  <details><summary>맥에서도 되나요?</summary><p>됩니다. 원안 조립만 한글이 있는 윈도우 PC가 필요합니다.</p></details>
+  <details><summary>PDF로 저장하면 정답이 보여요.</summary><p>형광펜은 종이로 인쇄하면 나오지 않지만 PDF로 저장하면 찍힙니다. 학생용 파일은 종이 인쇄로만 쓰세요.</p></details>
+  <details><summary>중간에 멈췄어요.</summary><p>「검증 이어서 해 줘」라고 말하면 빠진 부분만 이어서 돕니다. 로그인이 풀렸다면 로그인 창을 다시 띄워 드립니다.</p></details>
+  <details><summary>설치가 안 돼요.</summary><p>Claude에게 「원패스 준비가 안 돼」라고 말하면 무엇이 빠졌는지 점검하고 고칩니다. 설치 한 줄은 몇 번 다시 붙여 넣어도 괜찮습니다(이미 있는 것은 건너뛰고 최신으로 올립니다).</p></details>
+  <details><summary>Claude 없이 직접 설치할 수도 있나요?</summary><p>윈도우는 시작 메뉴에서 PowerShell을 열고 <code>irm https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.ps1 | iex</code>, 맥은 터미널에서 <code>curl -fsSL https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.sh | bash</code>를 붙여 넣으면 같은 설치가 됩니다.</p></details>
+  <details><summary>새 기능이 나오면요?</summary><p>설치 한 줄을 다시 붙여 넣으면 최신판으로 바뀝니다.</p></details>
 </section>
 
 <footer>연구부 원패스 · Claude Code 플러그인 · 문의는 연구부로</footer>

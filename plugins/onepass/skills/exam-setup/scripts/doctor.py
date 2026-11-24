@@ -1,4 +1,4 @@
-"""exam-tools 점검·설치·검토자 구성.
+"""연구부 원패스(exam-tools) 점검·설치·검토자 구성.
 
   doctor.py check            무엇이 있고 없는지, 로그인됐는지 (바꾸는 것 없음)
   doctor.py install [VENDORS] 쓰는 AI 의 명령줄 도구를 설치·업데이트 (claude, codex; 필요하면 node)

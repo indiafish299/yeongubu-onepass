@@ -8,7 +8,8 @@
   --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
-  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c8342b; --fleece2:#a52720; --blush:#f3a1a1; --mouth:#7a2a2a;
+  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c4abc9; --fleece2:#1f1f22; --inner:#c9cdd0; --tag:#c8342b;
+  --blush:#f3a1a1; --mouth:#7a2a2a;
   --logo:"Jua","Gowun Batang",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
@@ -94,7 +95,8 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 @media (max-width:620px){.intro{grid-template-columns:1fr}.boss{max-width:220px;justify-self:center}}
 .boss svg{display:block;width:100%;height:auto;overflow:visible}
 .boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--fleece)}
-.boss .zip{fill:none;stroke:var(--fleece2);stroke-width:2.4;stroke-linecap:round}
+.boss .zip{fill:none;stroke:var(--fleece2);stroke-width:3;stroke-linecap:round}
+.boss .inner{fill:var(--inner)} .boss .teeth{fill:#ffffff} .boss .fuzz{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;opacity:.35}
 .boss .pants{fill:var(--accent)} .boss .tie{fill:var(--accent)}
 .boss .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .boss .ol{stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round}
@@ -119,7 +121,7 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .lg-in{transform:skewX(-12deg);transform-box:view-box;transform-origin:0 100%;animation:zoom 1s cubic-bezier(.2,1.4,.4,1) both, nudge 6s ease-in-out 2s infinite}
 .lg-big{font-family:var(--logo);font-size:96px;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:8px;stroke-linejoin:round;letter-spacing:-2px}
 .lg-small{font-family:var(--logo);font-size:24px;fill:#ffffff}  /* 빨간 꼬리표 위 흰 글씨는 두 화면 모두 같다 */
-.lg-tag{fill:var(--fleece)}
+.lg-tag{fill:var(--tag)}
 .lg-pen{fill:var(--pen);transform:skewX(-6deg);transform-box:fill-box;transform-origin:left;animation:sweep2 .7s .35s ease-out both}
 .lg-star{fill:var(--pen);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;transform-box:fill-box;transform-origin:center;animation:twinkle 2.4s ease-in-out infinite}
 .lg-speed line{stroke:var(--accent);stroke-width:7;stroke-linecap:round;animation:speed 1s ease-out both, speed2 6s ease-in-out 2s infinite}
@@ -179,7 +181,7 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
   </h1>
   <p class="lead">시험지 원안을 <span class="pen">만들고, 여러 AI가 직접 풀어 보며 검증</span>하는 일까지 한 번에. 선생님은 Claude에게 말로 부탁만 하시면 됩니다.</p>
   </div>
-  <div class="boss" role="img" aria-label="빨간 후리스를 입은 마른 체구의 곱슬머리 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
+  <div class="boss" role="img" aria-label="연보라 복슬 후리스 모자를 쓴, 일자 앞머리에 환하게 웃는 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
     <svg viewBox="0 0 220 290">
       <!-- 말풍선 -->
       <g class="b-bubble">
@@ -197,10 +199,11 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
         <!-- 짧은 다리와 동글한 신발 -->
         <path class="pants ol" d="M90 214h15l-1 40h-12zM111 214h15l-2 40h-12z"/>
         <ellipse class="hair" cx="96" cy="258" rx="11" ry="6"/><ellipse class="hair" cx="120" cy="258" rx="11" ry="6"/>
-        <!-- 몸통: 빨간 후리스 -->
-        <path class="shirt ol" d="M84 150c0-10 10-16 24-16s24 6 24 16v62c0 4-4 6-8 6H92c-4 0-8-2-8-6z"/>
-        <path class="shirt ol" d="M97 134l11 9 11-9 3 9-14 8-14-8z"/>
-        <path class="zip" d="M108 152v62M104 158h8"/>
+        <!-- 몸통: 연보라 복슬 후리스 + 안에 회색 집업(검은 지퍼) -->
+        <path class="shirt ol" d="M82 150c0-11 11-17 26-17s26 6 26 17v62c0 4-4 6-8 6H90c-4 0-8-2-8-6z"/>
+        <path class="inner ol" d="M99 136h18l-2 82h-14z"/>
+        <path class="zip" d="M108 140v78"/>
+        <path class="fuzz" d="M84 162q3-3 6 0M126 170q3-3 6 0M86 196q3-3 6 0M124 204q3-3 6 0"/>
         <!-- 팔 -->
         <g class="b-armL">
           <path class="shirt ol" d="M88 146l-10 4-5 40 9 1 6-34z"/>
@@ -214,25 +217,31 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
           <rect class="paper" x="134" y="168" width="32" height="40" rx="4" transform="rotate(8 150 188)"/>
           <path class="okm" d="M142 188l6 6 11-13" transform="rotate(8 150 188)"/>
         </g>
-        <!-- 큰 머리 -->
-        <ellipse class="skin ol" cx="108" cy="94" rx="40" ry="38"/>
-        <!-- 곱슬머리 -->
-        <g class="hair">
-          <circle cx="72" cy="80" r="11"/><circle cx="78" cy="64" r="12"/><circle cx="92" cy="54" r="13"/>
-          <circle cx="108" cy="50" r="13"/><circle cx="124" cy="54" r="13"/><circle cx="138" cy="64" r="12"/>
-          <circle cx="144" cy="80" r="11"/><circle cx="100" cy="64" r="10"/><circle cx="116" cy="64" r="10"/>
-          <circle cx="86" cy="70" r="9"/><circle cx="130" cy="70" r="9"/>
+        <!-- 후리스 모자(복슬한 테두리) -->
+        <path class="shirt ol" d="M108 44c-34 0-54 22-54 52 0 24 12 40 30 46h48c18-6 30-22 30-46 0-30-20-52-54-52z"/>
+        <g class="shirt">
+          <circle cx="58" cy="92" r="6"/><circle cx="62" cy="72" r="6"/><circle cx="74" cy="56" r="6"/><circle cx="90" cy="47" r="6"/>
+          <circle cx="108" cy="44" r="6"/><circle cx="126" cy="47" r="6"/><circle cx="142" cy="56" r="6"/><circle cx="154" cy="72" r="6"/>
+          <circle cx="158" cy="92" r="6"/><circle cx="62" cy="112" r="6"/><circle cx="154" cy="112" r="6"/>
         </g>
+        <!-- 둥근 얼굴 -->
+        <ellipse class="skin ol" cx="108" cy="100" rx="37" ry="35"/>
+        <!-- 바가지 머리: 일자 앞머리 -->
+        <path class="hair ol" d="M71 96c-2-24 14-38 37-38s39 14 37 38c-2-3-4-5-6-5H77c-2 0-4 2-6 5z"/>
+        <path class="ln" style="stroke:var(--paper);stroke-width:1.4;opacity:.35" d="M86 70v14M98 66v18M110 65v19M122 67v17M132 72v12"/>
         <!-- 볼터치 -->
-        <ellipse class="blush" cx="84" cy="108" rx="8" ry="5"/><ellipse class="blush" cx="132" cy="108" rx="8" ry="5"/>
-        <!-- 눈썹 -->
-        <g class="b-brow"><path class="ln" d="M88 82q6-3 11 0M117 82q6-3 11 0"/></g>
-        <!-- 반짝이는 눈 -->
-        <g class="b-eye" style="transform-origin:94px 96px"><ellipse class="hair" cx="94" cy="96" rx="5" ry="6"/><circle class="shine" cx="96" cy="93" r="1.8"/></g>
-        <g class="b-eye" style="transform-origin:122px 96px"><ellipse class="hair" cx="122" cy="96" rx="5" ry="6"/><circle class="shine" cx="124" cy="93" r="1.8"/></g>
-        <!-- 입: 평소 / 외침 -->
-        <path class="b-calm ln" d="M102 110q6 5 12 0"/>
-        <path class="b-shout mouth ol" d="M99 108q9-3 18 0q0 13-9 13t-9-13z"/>
+        <ellipse class="blush" cx="82" cy="114" rx="8" ry="5"/><ellipse class="blush" cx="134" cy="114" rx="8" ry="5"/>
+        <!-- 눈썹(앞머리 바로 아래) -->
+        <g class="b-brow"><path class="ln" d="M86 96q6-2 11 0M119 96q6-2 11 0"/></g>
+        <!-- 눈: 평소엔 반달 웃음 / 놀라면 동그랗게 -->
+        <path class="b-calm ln" d="M85 106q6-6 12 0M119 106q6-6 12 0"/>
+        <g class="b-shout">
+          <g class="b-eye" style="transform-origin:91px 105px"><ellipse class="hair" cx="91" cy="105" rx="4.5" ry="5.5"/><circle class="shine" cx="93" cy="102" r="1.6"/></g>
+          <g class="b-eye" style="transform-origin:125px 105px"><ellipse class="hair" cx="125" cy="105" rx="4.5" ry="5.5"/><circle class="shine" cx="127" cy="102" r="1.6"/></g>
+        </g>
+        <!-- 입: 평소엔 이가 보이는 환한 웃음 / 외침 -->
+        <g class="b-calm"><path class="mouth ol" d="M94 117q14 5 28 0q-2 13-14 13t-14-13z"/><path class="teeth" d="M96 118q12 4 24 0v4q-12 3-24 0z"/></g>
+        <g class="b-shout"><path class="mouth ol" d="M98 115q10-3 20 0q0 16-10 16t-10-16z"/><path class="teeth" d="M100 116q8-2 16 0v3q-8 2-16 0z"/></g>
       </g>
     </svg>
   </div>

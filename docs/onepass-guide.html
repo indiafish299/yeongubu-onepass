@@ -96,6 +96,15 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss svg{display:block;width:100%;height:auto;overflow:visible}
 .boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--fleece)}
 .boss .zip{fill:none;stroke:var(--fleece2);stroke-width:3;stroke-linecap:round}
+.boss .pack{fill:#ffffff} .boss .packtop{fill:var(--tag)} .boss .packstick{stroke:#e9d8b4;stroke-width:2.2;stroke-linecap:round}
+.boss .b-pack{transform-box:view-box;transform-origin:120px 195px;opacity:0;animation:pack 4.2s ease-in infinite}
+@keyframes pack{0%,42%{opacity:0;transform:none}
+  45%{opacity:1;transform:translate(4px,-10px) rotate(20deg)}
+  60%{opacity:1;transform:translate(26px,62px) rotate(200deg)}
+  65%{opacity:1;transform:translate(30px,55px) rotate(215deg)}
+  70%,88%{opacity:1;transform:translate(33px,62px) rotate(270deg)}
+  96%,100%{opacity:0;transform:translate(33px,62px) rotate(270deg)}}
+@media (prefers-reduced-motion:reduce){.boss .b-pack{animation:none;opacity:0}}
 .boss .inner{fill:var(--inner)} .boss .teeth{fill:#ffffff} .boss .fuzz{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;opacity:.35}
 .boss .pants{fill:var(--accent)} .boss .tie{fill:var(--accent)}
 .boss .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
@@ -242,6 +251,14 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
         <!-- 입: 평소엔 이가 보이는 환한 웃음 / 외침 -->
         <g class="b-calm"><path class="mouth ol" d="M94 117q14 5 28 0q-2 13-14 13t-14-13z"/><path class="teeth" d="M96 118q12 4 24 0v4q-12 3-24 0z"/></g>
         <g class="b-shout"><path class="mouth ol" d="M98 115q10-3 20 0q0 16-10 16t-10-16z"/><path class="teeth" d="M100 116q8-2 16 0v3q-8 2-16 0z"/></g>
+        <!-- 후리스 주머니 -->
+        <path class="ln" style="opacity:.55" d="M114 190h14"/>
+      </g>
+      <!-- 「패스!」 하며 뛰어오를 때 주머니에서 빠져 떨어지는 담뱃갑(상표 없음) -->
+      <g class="b-pack">
+        <rect class="pack ol" x="114" y="186" width="13" height="18" rx="1.5"/>
+        <rect class="packtop" x="114" y="186" width="13" height="6" rx="1.5"/>
+        <path class="packstick" d="M117 186v-3M121 186v-4M124 186v-2"/>
       </g>
     </svg>
   </div>

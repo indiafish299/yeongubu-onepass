@@ -123,6 +123,30 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss .blush{fill:var(--blush)} .boss .shine{fill:#ffffff} .boss .mouth{fill:var(--mouth)}
 .boss .b-eye{transform-box:view-box}
 .boss{overflow:hidden;padding-top:4px}
+/* 본교 맞춤 */
+.fit{display:grid;gap:16px}
+.fit-badge{justify-self:start;font-family:var(--logo);font-size:1rem;color:#ffffff;background:var(--tag);border-radius:99px;padding:3px 14px}
+.lead2{color:var(--mut);margin:0;max-width:40em}
+.fit-grid{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:620px){.fit-grid{grid-template-columns:minmax(0,1fr)}.fit-sheet{max-width:260px;justify-self:center}}
+.fit-sheet svg{display:block;width:100%;height:auto}
+.fs-page{fill:var(--card);stroke:var(--line);stroke-width:2}
+.fs-head{fill:none;stroke:var(--ink);stroke-width:1.6}
+.fs-rule{stroke:var(--ink);stroke-width:1;opacity:.6}
+.fs-col{stroke:var(--line);stroke-width:2}
+.fs-txt{stroke:var(--line);stroke-width:5;stroke-linecap:round}
+.fs-ul{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.fs-pen{fill:var(--pen)}
+.fs-foot{stroke:var(--mut);stroke-width:3;stroke-linecap:round;opacity:.6}
+.fs-tags circle{fill:var(--tag)} .fs-tags text{fill:#ffffff;font:700 11px var(--body);text-anchor:middle}
+.fit-list{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:f}
+.fit-list li{counter-increment:f;position:relative;padding-left:36px;font-size:.98rem;color:var(--mut)}
+.fit-list li::before{content:counter(f);position:absolute;left:0;top:3px;width:24px;height:24px;border-radius:50%;background:var(--tag);color:#ffffff;
+  display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.fit-list b{display:block;color:var(--ink);font-weight:700}
+.fit-more{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.fit-more div{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pen);border-radius:10px;padding:12px 14px;font-size:.95rem;color:var(--mut)}
+.fit-more b{display:block;color:var(--ink)}
 /* 로고: 둥근 글꼴, 오른쪽으로 기울고 속도선과 함께 「슝」 들어온다 */
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;max-width:440px}
@@ -295,6 +319,49 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
     <div class="cap"><span>① 원안에 정답 형광펜</span><span>② AI 여럿이 따로 풀기</span><span>③ 다시 볼 문항 보고서</span></div>
   </div>
 </header>
+
+<section id="fit" class="fit">
+  <div class="fit-badge">본교 맞춤</div>
+  <h2>본교 시험지 원안 양식에 <span class="pen">그대로 맞췄습니다</span></h2>
+  <p class="lead2">일반 AI 도구는 아무 시험지 모양으로 만듭니다. 원패스는 본교 원안 양식을 기준으로, 만드는 것도 검증하는 것도 본교 원안에 맞춰 돌아갑니다. 따로 고칠 일이 거의 없습니다.</p>
+  <div class="fit-grid">
+    <div class="fit-sheet" role="img" aria-label="본교 원안 한 장에서 맞춘 곳: 머리 표와 결재란, 2단 배치, 정답 형광펜, 옳지 않은의 밑줄과 굵게, 선지 줄 간격, 꼬리말">
+      <svg viewBox="0 0 300 380">
+        <rect class="fs-page" x="6" y="6" width="288" height="368" rx="6"/>
+        <rect class="fs-head" x="20" y="20" width="260" height="46" rx="3"/>
+        <path class="fs-rule" d="M20 36h260M80 20v46M140 20v46M200 20v46"/>
+        <line class="fs-col" x1="150" y1="78" x2="150" y2="330"/>
+        <path class="fs-txt" d="M24 86h112M24 96h96M24 120h112M24 130h80"/>
+        <rect class="fs-pen" x="24" y="148" width="14" height="10" rx="2"/>
+        <path class="fs-txt" d="M42 153h20M70 153h20M98 153h20M24 168h20M52 168h20"/>
+        <path class="fs-txt" d="M24 196h60"/><path class="fs-ul" d="M88 199h18"/><path class="fs-txt" d="M110 196h26"/>
+        <path class="fs-txt" d="M164 86h112M164 96h100M164 110h112M164 120h90M164 150h112M164 160h70"/>
+        <path class="fs-txt" d="M164 186h20M192 186h20M220 186h20M164 201h20M192 201h20"/>
+        <path class="fs-foot" d="M60 350h180"/>
+        <g class="fs-tags">
+          <g><circle cx="282" cy="28" r="9"/><text x="282" y="32">1</text></g>
+          <g><circle cx="150" cy="248" r="9"/><text x="150" y="252">2</text></g>
+          <g><circle cx="16" cy="153" r="9"/><text x="16" y="157">3</text></g>
+          <g><circle cx="97" cy="212" r="9"/><text x="97" y="216">4</text></g>
+          <g><circle cx="284" cy="194" r="9"/><text x="284" y="198">5</text></g>
+          <g><circle cx="250" cy="350" r="9"/><text x="250" y="354">6</text></g>
+        </g>
+      </svg>
+    </div>
+    <ol class="fit-list">
+      <li><b>머리 표·결재란·배점안내</b>지난 원안 파일을 그대로 틀로 써서 회차·날짜·교시만 바꿉니다.</li>
+      <li><b>B4 2단, 문항이 단을 넘지 않게</b>학교 글꼴·장평·자간과 어절 줄바꿈, 외톨이 줄·벌어진 줄을 자동으로 다듬습니다.</li>
+      <li><b>정답은 형광펜</b>종이 인쇄에는 안 나와서 원안 한 부로 바로 제출할 수 있습니다.</li>
+      <li><b>「옳지 <u>않은</u>」</b>'않은'에만 밑줄과 굵게.</li>
+      <li><b>선지 줄 간격</b>①~⑤ 두 줄 선지를 본문 줄과 비슷하게(5.6mm) 넓힙니다.</li>
+      <li><b>면수·꼬리말·배점 합 100</b>배점안내의 면수와 실제 면수, 총 문항 수가 맞는지 확인합니다.</li>
+    </ol>
+  </div>
+  <div class="fit-more">
+    <div><b>검증도 본교 원안에 맞춰</b>머리 표·결재란·저작권 줄을 자동으로 찾아 가리고, 형광펜 정답을 지운 뒤 AI에게 보냅니다. 본교 정답·배점표를 그대로 읽어 정답과 대조합니다.</div>
+    <div><b>제출 서류까지</b>정답·배점표, 이원목적분류표, 나이스 문항정보표 입력용 표를 본교 양식으로 함께 만듭니다.</div>
+  </div>
+</section>
 
 <section id="start">
   <h2>선생님이 하실 일은 세 가지입니다</h2>

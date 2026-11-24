@@ -8,7 +8,7 @@
   --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
-  --skin:#f2d0b0; --hair:#2c2a28;
+  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c8342b; --fleece2:#a52720;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
@@ -92,7 +92,8 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .intro>div{min-width:0;display:grid;gap:14px}
 @media (max-width:620px){.intro{grid-template-columns:1fr}.boss{max-width:220px;justify-self:center}}
 .boss svg{display:block;width:100%;height:auto;overflow:visible}
-.boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--card)}
+.boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--fleece)}
+.boss .zip{fill:none;stroke:var(--fleece2);stroke-width:2.4;stroke-linecap:round}
 .boss .pants{fill:var(--accent)} .boss .tie{fill:var(--accent)}
 .boss .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .boss .ol{stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round}
@@ -143,7 +144,7 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
   <h1>연구부 원패스</h1>
   <p class="lead">시험지 원안을 <span class="pen">만들고, 여러 AI가 직접 풀어 보며 검증</span>하는 일까지 한 번에. 선생님은 Claude에게 말로 부탁만 하시면 됩니다.</p>
   </div>
-  <div class="boss" role="img" aria-label="마른 체구에 안경을 쓴 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
+  <div class="boss" role="img" aria-label="빨간 후리스를 입은 마른 체구의 곱슬머리 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
     <svg viewBox="0 0 220 300">
       <!-- 말풍선 -->
       <g class="b-bubble">
@@ -163,7 +164,9 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
         <path class="ln" d="M86 288h-10M126 288h10"/>
         <!-- 몸통 -->
         <path class="shirt ol" d="M84 124c0-8 8-12 24-12s24 4 24 12v76H84z"/>
-        <path class="tie ol" d="M104 114h8l3 8-5 52-5-52z"/>
+        <!-- 후리스: 세운 깃과 지퍼 -->
+        <path class="shirt ol" d="M97 112l11 10 11-10 3 10-14 8-14-8z"/>
+        <path class="zip" d="M108 130v66M104 136h8"/>
         <!-- 왼팔(그림 왼쪽) -->
         <g class="b-armL" style="transform-origin:86px 128px">
           <path class="shirt ol" d="M86 126l-10 4-6 58 9 1 7-50z"/>
@@ -181,14 +184,18 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
         <!-- 목·머리 -->
         <rect class="skin ol" x="102" y="100" width="12" height="14" rx="3"/>
         <ellipse class="skin ol" cx="108" cy="72" rx="26" ry="32"/>
-        <path class="hair ol" d="M82 66c0-22 12-32 27-32s26 10 26 30c-6-8-16-12-27-12s-20 6-26 14z"/>
+        <!-- 곱슬머리 -->
+        <g class="hair">
+          <circle cx="86" cy="58" r="9"/><circle cx="94" cy="46" r="10"/><circle cx="107" cy="41" r="11"/>
+          <circle cx="121" cy="45" r="10"/><circle cx="131" cy="56" r="9"/><circle cx="82" cy="70" r="6"/>
+          <circle cx="135" cy="68" r="6"/><circle cx="100" cy="52" r="8"/><circle cx="116" cy="52" r="8"/>
+        </g>
         <!-- 눈썹 -->
-        <g class="b-brow"><path class="ln" d="M90 60l12-2M114 58l12 2"/></g>
-        <!-- 안경 -->
-        <circle class="ln" cx="96" cy="72" r="9"/><circle class="ln" cx="120" cy="72" r="9"/><path class="ln" d="M105 72h6M87 70l-5-2M129 70l5-2"/>
-        <!-- 눈 -->
-        <ellipse class="b-eye hair" cx="96" cy="72" rx="2.6" ry="2.6"/>
-        <ellipse class="b-eye hair" cx="120" cy="72" rx="2.6" ry="2.6"/>
+        <g class="b-brow"><path class="ln" d="M90 64l11-2M115 62l11 2"/></g>
+        <!-- 눈 (안경 없음) -->
+        <ellipse class="b-eye hair" cx="97" cy="74" rx="3" ry="3.4"/>
+        <ellipse class="b-eye hair" cx="119" cy="74" rx="3" ry="3.4"/>
+        <path class="ln" d="M108 76l-2 7h4"/>
         <!-- 입: 평소 / 외침 -->
         <path class="b-calm ln" d="M101 91q7 4 14 0"/>
         <ellipse class="b-shout hair" cx="108" cy="92" rx="7" ry="8"/>

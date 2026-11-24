@@ -1,21 +1,52 @@
 <!doctype html><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* 레이아웃: 시험지 한 장처럼 — 좁은 본문 단, 형광펜 줄이 핵심 낱말을 긋는다 */
+/* 레이아웃: 감사 문서처럼 — 차가운 종이, 남색 잉크, 검증 표시는 초록, 강조만 형광펜 */
 :root{
-  --paper:#fbfbf7; --ink:#1f2a37; --mut:#5d6673; --line:#d9dccf; --card:#ffffff;
-  --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
+  --paper:#f5f7fa; --ink:#14202e; --mut:#4f5b69; --line:#d6dce4; --card:#ffffff;
+  --pen:#fff06a; --pen-ink:#14202e; --accent:#183b5c; --ok:#1f6f4a; --warn:#9a5b00;
+  --gate:#14202e; --gate-ink:#ffffff;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
-  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c4abc9; --fleece2:#1f1f22; --inner:#c9cdd0; --tag:#c8342b;
+  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#9fd2f2; --fleece2:#1f1f22; --inner:#c9cdd0; --tag:#c8342b;
   --blush:#f3a1a1; --mouth:#7a2a2a;
   --logo:"Jua","Gowun Batang",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
-  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; color-scheme:dark}}
+  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; --gate:#e8eae4; --gate-ink:#14202e; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
-  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; color-scheme:dark}
+  --pen:#8a7d12; --pen-ink:#fffbe0; --accent:#7fb6e0; --ok:#7fcf95; --warn:#f0b35a; --gate:#e8eae4; --gate-ink:#14202e; color-scheme:dark}
+/* 검증·보안 */
+.trust{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.trust li{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px 10px 8px 30px;font-size:.84rem;color:var(--mut);position:relative;line-height:1.45}
+.trust li::before{content:"";position:absolute;left:10px;top:12px;width:12px;height:12px;border-radius:3px;background:var(--ok);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/12px no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2 6.5l2.5 2.5L10 3' stroke='black' stroke-width='2' fill='none'/%3E%3C/svg%3E") center/12px no-repeat}
+.trust b{display:block;color:var(--ink);font-size:.92rem}
+.sec-label{font:600 .75rem/1 var(--mono);letter-spacing:.14em;color:var(--ok);margin-bottom:8px}
+.flow{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:0;border-left:2px solid var(--line);margin-left:14px}
+.flow li{position:relative;padding:8px 0 12px 30px;color:var(--mut);font-size:.95rem}
+.flow li b{display:block;color:var(--ink)}
+.flow .no{position:absolute;left:-15px;top:8px;min-width:28px;height:28px;padding:0 6px;border-radius:14px;background:var(--card);border:2px solid var(--accent);
+  color:var(--accent);font:700 .8rem/24px var(--mono);text-align:center}
+.flow li.gate{background:var(--card);border:1px solid var(--line);border-radius:10px;margin:6px 0 10px 18px;padding:12px 14px 12px 50px}
+.flow li.gate .no{left:-33px;top:12px;background:var(--gate);border-color:var(--gate);color:var(--gate-ink);font-size:.72rem;padding:0 8px;width:auto}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.facts div{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:12px 14px;font-size:.92rem;color:var(--mut)}
+.facts b{display:block;color:var(--ink);font-family:var(--body)}
+.dataflow{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-bottom:14px;overflow:hidden}
+.dataflow svg{display:block;width:100%;height:auto}
+.df-box{fill:none;stroke:var(--ink);stroke-width:1.6} .df-box.ai{stroke-dasharray:6 5}
+.df-h{font:700 14px var(--body);fill:var(--ink)}
+.df-item rect{fill:var(--paper);stroke:var(--line)} .df-item text,.df-no text{font:12.5px var(--body);fill:var(--ink)}
+.df-no rect{fill:var(--paper);stroke:var(--tag);stroke-dasharray:4 3} .df-no path{stroke:var(--tag);stroke-width:2.4;stroke-linecap:round}
+.df-arrow{stroke:var(--ok);stroke-width:3;stroke-dasharray:7 5} .df-head{fill:var(--ok)}
+.df-small{font:12px var(--body);fill:var(--mut)}
+.sec-table{border-collapse:collapse;width:100%;font-size:.94rem;margin-bottom:8px}
+.sec-table th{width:72px;text-align:left;vertical-align:top;padding:9px 10px;border-top:1px solid var(--line);color:var(--ok);font:600 .82rem var(--mono);letter-spacing:.06em}
+.sec-table td{padding:9px 10px;border-top:1px solid var(--line);color:var(--mut)}
+.sec-table code{font:.85em var(--mono);background:var(--paper);padding:1px 5px;border-radius:4px}
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font:17px/1.75 var(--body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
@@ -94,14 +125,15 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss svg{display:block;width:100%;height:auto;overflow:visible}
 .boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--fleece)}
 .boss .zip{fill:none;stroke:var(--fleece2);stroke-width:3;stroke-linecap:round}
-.boss .pack{fill:#ffffff} .boss .packtop{fill:var(--tag)} .boss .packstick{stroke:#e9d8b4;stroke-width:2.2;stroke-linecap:round}
-.boss .b-pack{transform-box:view-box;transform-origin:120px 195px;opacity:0;animation:pack 4.2s ease-in infinite}
+.boss .pack{fill:#ffffff} .boss .packtop{fill:#b3262a} .boss .warn{fill:#3c4148} .boss .foil{fill:#d9c27a} .boss .lid{fill:#b3262a}
+.boss .cig rect{fill:#fbfaf5;stroke:#9a958a;stroke-width:.6} .boss .cig rect.tip{fill:#d9883e} .boss .btn circle{fill:#ffffff;stroke:var(--ink);stroke-width:1}
+.boss .b-pack{transform-box:view-box;transform-origin:121px 160px;opacity:0;animation:pack 4.2s ease-in infinite}
 @keyframes pack{0%,42%{opacity:0;transform:none}
-  45%{opacity:1;transform:translate(4px,-10px) rotate(20deg)}
-  60%{opacity:1;transform:translate(26px,62px) rotate(200deg)}
-  65%{opacity:1;transform:translate(30px,55px) rotate(215deg)}
-  70%,88%{opacity:1;transform:translate(33px,62px) rotate(270deg)}
-  96%,100%{opacity:0;transform:translate(33px,62px) rotate(270deg)}}
+  45%{opacity:1;transform:translate(4px,-14px) rotate(18deg)}
+  60%{opacity:1;transform:translate(26px,88px) rotate(200deg)}
+  65%{opacity:1;transform:translate(30px,80px) rotate(215deg)}
+  70%,88%{opacity:1;transform:translate(33px,90px) rotate(270deg)}
+  96%,100%{opacity:0;transform:translate(33px,90px) rotate(270deg)}}
 @media (prefers-reduced-motion:reduce){.boss .b-pack{animation:none;opacity:0}}
 .boss .inner{fill:var(--inner)} .boss .teeth{fill:#ffffff} .boss .fuzz{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linecap:round;opacity:.35}
 .boss .pants{fill:var(--accent)} .boss .tie{fill:var(--accent)}
@@ -121,6 +153,30 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss .blush{fill:var(--blush)} .boss .shine{fill:#ffffff} .boss .mouth{fill:var(--mouth)}
 .boss .b-eye{transform-box:view-box}
 .boss{overflow:hidden;padding-top:4px}
+/* 본교 맞춤 */
+.fit{display:grid;gap:16px}
+.fit-badge{justify-self:start;font-family:var(--logo);font-size:1rem;color:#ffffff;background:var(--tag);border-radius:99px;padding:3px 14px}
+.lead2{color:var(--mut);margin:0;max-width:40em}
+.fit-grid{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:620px){.fit-grid{grid-template-columns:minmax(0,1fr)}.fit-sheet{max-width:260px;justify-self:center}}
+.fit-sheet svg{display:block;width:100%;height:auto}
+.fs-page{fill:var(--card);stroke:var(--line);stroke-width:2}
+.fs-head{fill:none;stroke:var(--ink);stroke-width:1.6}
+.fs-rule{stroke:var(--ink);stroke-width:1;opacity:.6}
+.fs-col{stroke:var(--line);stroke-width:2}
+.fs-txt{stroke:var(--line);stroke-width:5;stroke-linecap:round}
+.fs-ul{stroke:var(--ink);stroke-width:3;stroke-linecap:round}
+.fs-pen{fill:var(--pen)}
+.fs-foot{stroke:var(--mut);stroke-width:3;stroke-linecap:round;opacity:.6}
+.fs-tags circle{fill:var(--tag)} .fs-tags text{fill:#ffffff;font:700 11px var(--body);text-anchor:middle}
+.fit-list{margin:0;padding:0;list-style:none;display:grid;gap:10px;counter-reset:f}
+.fit-list li{counter-increment:f;position:relative;padding-left:36px;font-size:.98rem;color:var(--mut)}
+.fit-list li::before{content:counter(f);position:absolute;left:0;top:3px;width:24px;height:24px;border-radius:50%;background:var(--tag);color:#ffffff;
+  display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.fit-list b{display:block;color:var(--ink);font-weight:700}
+.fit-more{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.fit-more div{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--pen);border-radius:10px;padding:12px 14px;font-size:.95rem;color:var(--mut)}
+.fit-more b{display:block;color:var(--ink)}
 /* 로고: 둥근 글꼴, 오른쪽으로 기울고 속도선과 함께 「슝」 들어온다 */
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .logo{margin:0;max-width:440px}
@@ -183,7 +239,7 @@ body{background:var(--paper);font-size:30px}
 .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:center;font-size:26px;color:var(--mut)}
 .foot b{font-family:var(--logo);font-size:34px;color:var(--tag);font-weight:400}
 /* 포스터(정지 그림)에는 「패스!」 뒤 바닥에 떨어진 담뱃갑을 보인다 */
-.boss .b-pack{animation:none!important;opacity:1!important;transform:translate(33px,62px) rotate(270deg)!important}
+.boss .b-pack{animation:none!important;opacity:1!important;transform:translate(33px,90px) rotate(270deg)!important}
 </style>
 <div class="pz">
   <div class="top">
@@ -216,11 +272,11 @@ body{background:var(--paper);font-size:30px}
         <!-- 짧은 다리와 동글한 신발 -->
         <path class="pants ol" d="M90 214h15l-1 40h-12zM111 214h15l-2 40h-12z"/>
         <ellipse class="hair" cx="96" cy="258" rx="11" ry="6"/><ellipse class="hair" cx="120" cy="258" rx="11" ry="6"/>
-        <!-- 몸통: 연보라 복슬 후리스 + 안에 회색 집업(검은 지퍼) -->
+        <!-- 몸통: 하늘색 셔츠(단추 줄·가슴 주머니) -->
         <path class="shirt ol" d="M82 150c0-11 11-17 26-17s26 6 26 17v62c0 4-4 6-8 6H90c-4 0-8-2-8-6z"/>
-        <path class="inner ol" d="M99 136h18l-2 82h-14z"/>
-        <path class="zip" d="M108 140v78"/>
-        <path class="fuzz" d="M84 162q3-3 6 0M126 170q3-3 6 0M86 196q3-3 6 0M124 204q3-3 6 0"/>
+        <path class="ln" style="stroke-width:1.6;opacity:.6" d="M108 148v68"/>
+        <g class="btn"><circle cx="108" cy="162" r="2"/><circle cx="108" cy="178" r="2"/><circle cx="108" cy="194" r="2"/><circle cx="108" cy="208" r="2"/></g>
+        <path class="shirt ol" d="M113 158h16v14c0 2-1 3-3 3h-10c-2 0-3-1-3-3z"/>
         <!-- 팔 -->
         <g class="b-armL">
           <path class="shirt ol" d="M88 146l-10 4-5 40 9 1 6-34z"/>
@@ -230,8 +286,8 @@ body{background:var(--paper);font-size:30px}
           <path class="shirt ol" d="M128 146l10 4 5 40-9 1-6-34z"/>
           <circle class="skin ol" cx="139" cy="196" r="7"/>
         </g>
-        <!-- 모자 벗은 후리스: 목 뒤로 넘긴 깃 -->
-        <path class="shirt ol" d="M80 136q28-12 56 0l-6 10q-22-8-44 0z"/>
+        <!-- 셔츠 깃 -->
+        <path class="shirt ol" d="M108 148l-13-14-7 9 9 11z"/><path class="shirt ol" d="M108 148l13-14 7 9-9 11z"/>
         <!-- 귀 -->
         <ellipse class="skin ol" cx="71" cy="104" rx="6" ry="9"/><ellipse class="skin ol" cx="145" cy="104" rx="6" ry="9"/>
         <!-- 둥근 얼굴 -->
@@ -257,14 +313,17 @@ body{background:var(--paper);font-size:30px}
         <!-- 입: 평소엔 이가 보이는 환한 웃음 / 외침 -->
         <g class="b-calm"><path class="mouth ol" d="M94 117q14 5 28 0q-2 13-14 13t-14-13z"/><path class="teeth" d="M96 118q12 4 24 0v4q-12 3-24 0z"/></g>
         <g class="b-shout"><path class="mouth ol" d="M98 115q10-3 20 0q0 16-10 16t-10-16z"/><path class="teeth" d="M100 116q8-2 16 0v3q-8 2-16 0z"/></g>
-        <!-- 후리스 주머니 -->
-        <path class="ln" style="opacity:.55" d="M114 190h14"/>
       </g>
-      <!-- 「패스!」 하며 뛰어오를 때 주머니에서 빠져 떨어지는 담뱃갑(상표 없음) -->
+      <!-- 「패스!」 하며 뛰어오를 때 가슴 주머니에서 빠져 떨어지는 담뱃갑(뚜껑 열린 갑, 상표 없음) -->
       <g class="b-pack">
-        <rect class="pack ol" x="114" y="186" width="13" height="18" rx="1.5"/>
-        <rect class="packtop" x="114" y="186" width="13" height="6" rx="1.5"/>
-        <path class="packstick" d="M117 186v-3M121 186v-4M124 186v-2"/>
+        <path class="lid ol" d="M114 151l-3-13h20l-3 13z"/>
+        <g class="cig"><rect x="115.5" y="141" width="3.4" height="12"/><rect class="tip" x="115.5" y="141" width="3.4" height="4.5"/></g>
+        <g class="cig"><rect x="119.4" y="139" width="3.4" height="14"/><rect class="tip" x="119.4" y="139" width="3.4" height="4.5"/></g>
+        <g class="cig"><rect x="123.3" y="142" width="3.4" height="11"/><rect class="tip" x="123.3" y="142" width="3.4" height="4.5"/></g>
+        <rect class="foil" x="114" y="149" width="14" height="4"/>
+        <rect class="pack ol" x="113" y="150" width="16" height="23" rx="1.5"/>
+        <rect class="packtop" x="113.8" y="150.8" width="14.4" height="6"/>
+        <rect class="warn" x="114.8" y="162" width="12.4" height="9" rx="1"/>
       </g>
     </svg></div>
   </div>

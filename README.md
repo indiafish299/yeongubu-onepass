@@ -6,16 +6,16 @@
 - 안내 페이지(설치·사용법·그림): `docs/onepass-guide.html` — 공유용 링크는 연구부에 문의
 - 소개 영상 대본(클로드 모션): `docs/claude-motion-대본.md`
 
-## 설치 (선생님)
+## 설치 (선생님) — 한 줄
 
 1. Claude 앱(claude.ai/download)을 설치하고 유료 요금제로 로그인, **Code** 탭을 엽니다.
-2. 입력 칸에 한 줄씩 붙여 넣습니다.
+2. 아래 한 줄을 Claude에게 붙여 넣습니다. 나머지는 Claude가 설치합니다(「실행해도 될까요?」에는 허용).
 
-        /plugin marketplace add indiafish299/yeongubu-onepass
-        /plugin install onepass@yeongubu
+        연구부 원패스 설치해 줘. 윈도우는 irm https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.ps1 | iex , 맥은 curl -fsSL https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.sh | bash 를 실행하면 돼.
 
-3. 앱을 다시 열고 「원패스 준비해 줘」라고 말합니다. 필요한 프로그램은 알아서 설치되고, 선생님은 브라우저 로그인만 합니다.
+3. 앱을 껐다 켜고 「원패스 준비해 줘」라고 말합니다(AI 로그인·검토자 고르기).
 
+설치 스크립트(`install.ps1`, `install.sh`)가 하는 일: Claude 명령줄 도구 확인(없으면 공식 설치) → `claude plugin install onepass --marketplace indiafish299/yeongubu-onepass` → 파이썬·패키지 준비(`exam-setup/scripts/bootstrap`). 다시 실행하면 최신판으로 올린다.
 | 스킬 | 하는 일 |
 |---|---|
 | `exam-setup` 처음 준비 | 파이썬·검증 코드·AI 명령줄 도구 자동 설치·업데이트, 로그인 안내, 요금제에서 되는 검토자 모델 고르기 |

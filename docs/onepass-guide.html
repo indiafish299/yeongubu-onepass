@@ -1,6 +1,6 @@
 <title>연구부 원패스</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Jua&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
 <style>
 /* 레이아웃: 시험지 한 장처럼 — 좁은 본문 단, 형광펜 줄이 핵심 낱말을 긋는다 */
 :root{
@@ -8,7 +8,8 @@
   --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
-  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c8342b; --fleece2:#a52720;
+  --skin:#f2d0b0; --hair:#2c2a28; --fleece:#c8342b; --fleece2:#a52720; --blush:#f3a1a1; --mouth:#7a2a2a;
+  --logo:"Jua","Gowun Batang",sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
@@ -106,9 +107,30 @@ footer{padding-top:28px;color:var(--mut);font-size:.88rem}
 .boss g,.boss path,.boss ellipse{transform-box:fill-box}
 .b-body{animation:jump 4.2s ease-in-out infinite;transform-origin:50% 100%}
 .boss .b-armL,.boss .b-armR{transform-box:view-box}  /* 어깨(그림 좌표)를 축으로 돈다 */
-.b-armL{transform-origin:86px 128px;animation:armL 4.2s ease-in-out infinite}
-.b-armR{transform-origin:130px 128px;animation:armR 4.2s ease-in-out infinite}
+.b-armL{transform-origin:88px 148px;animation:armL 4.2s ease-in-out infinite}
+.b-armR{transform-origin:128px 148px;animation:armR 4.2s ease-in-out infinite}
+.boss .blush{fill:var(--blush)} .boss .shine{fill:#ffffff} .boss .mouth{fill:var(--mouth)}
+.boss .b-eye{transform-box:view-box}
 .boss{overflow:hidden;padding-top:4px}
+/* 로고: 둥근 글꼴, 오른쪽으로 기울고 속도선과 함께 「슝」 들어온다 */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.logo{margin:0;max-width:440px}
+.logo svg{display:block;width:100%;height:auto;overflow:visible}
+.lg-in{transform:skewX(-12deg);transform-box:view-box;transform-origin:0 100%;animation:zoom 1s cubic-bezier(.2,1.4,.4,1) both, nudge 6s ease-in-out 2s infinite}
+.lg-big{font-family:var(--logo);font-size:96px;fill:var(--ink);paint-order:stroke;stroke:var(--paper);stroke-width:8px;stroke-linejoin:round;letter-spacing:-2px}
+.lg-small{font-family:var(--logo);font-size:24px;fill:#ffffff}  /* 빨간 꼬리표 위 흰 글씨는 두 화면 모두 같다 */
+.lg-tag{fill:var(--fleece)}
+.lg-pen{fill:var(--pen);transform:skewX(-6deg);transform-box:fill-box;transform-origin:left;animation:sweep2 .7s .35s ease-out both}
+.lg-star{fill:var(--pen);stroke:var(--ink);stroke-width:2.5;stroke-linejoin:round;transform-box:fill-box;transform-origin:center;animation:twinkle 2.4s ease-in-out infinite}
+.lg-speed line{stroke:var(--accent);stroke-width:7;stroke-linecap:round;animation:speed 1s ease-out both, speed2 6s ease-in-out 2s infinite}
+.lg-speed line:nth-child(2){animation-delay:.08s,2.08s}.lg-speed line:nth-child(3){animation-delay:.16s,2.16s}
+@keyframes zoom{0%{transform:translateX(-60px) skewX(-24deg)}100%{transform:skewX(-12deg)}}
+@keyframes nudge{0%,88%,100%{transform:skewX(-12deg)}92%{transform:translateX(10px) skewX(-18deg)}96%{transform:translateX(-2px) skewX(-10deg)}}
+@keyframes sweep2{0%{transform:skewX(-6deg) scaleX(.2)}100%{transform:skewX(-6deg) scaleX(1)}}
+@keyframes speed{0%{transform:translateX(30px);opacity:.2}100%{transform:none;opacity:1}}
+@keyframes speed2{0%,86%,100%{transform:none}92%{transform:translateX(-14px)}}
+@keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.2) rotate(18deg)}}
+@media (prefers-reduced-motion:reduce){.lg-in,.lg-pen,.lg-star,.lg-speed line{animation:none}}
 /* 한 칸짜리 그리드도 긴 한 줄(설치 명령) 때문에 넓어지지 않게 */
 header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
 .b-brow{animation:brow 4.2s ease-in-out infinite}
@@ -122,7 +144,7 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
 @keyframes armL{0%,38%{transform:rotate(0)}48%,88%{transform:rotate(118deg)}96%,100%{transform:rotate(0)}}
 @keyframes armR{0%,38%{transform:rotate(0)}48%,88%{transform:rotate(-128deg)}96%,100%{transform:rotate(0)}}
 @keyframes brow{0%,38%{transform:none}46%,88%{transform:translateY(-6px)}96%,100%{transform:none}}
-@keyframes eye{0%,38%{transform:scale(1)}46%,88%{transform:scale(1.9)}96%,100%{transform:scale(1)}}
+@keyframes eye{0%,38%{transform:scale(1)}46%,88%{transform:scale(1.4)}96%,100%{transform:scale(1)}}
 @keyframes calm{0%{opacity:1}42%{opacity:0}92%{opacity:1}}
 @keyframes shout{0%{opacity:0}42%{opacity:1}92%{opacity:0}}
 @keyframes bub{0%,42%{transform:scale(0);opacity:0}52%{transform:scale(1);opacity:1}88%{transform:scale(1);opacity:1}94%,100%{transform:scale(.6);opacity:0}}
@@ -132,7 +154,7 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
   .b-body,.b-armL,.b-armR,.b-brow,.b-eye,.b-paper,.b-zap{animation:none}
   .b-calm{animation:none;opacity:0}.b-shout{animation:none;opacity:1}
   .b-bubble{animation:none;opacity:1;transform:none}
-  .b-armL{transform:rotate(118deg)}.b-armR{transform:rotate(-128deg)}.b-eye{transform:scale(1.9)}.b-brow{transform:translateY(-6px)}
+  .b-armL{transform:rotate(118deg)}.b-armR{transform:rotate(-128deg)}.b-eye{transform:scale(1.4)}.b-brow{transform:translateY(-6px)}
 }
 </style>
 
@@ -141,64 +163,76 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
   <div class="intro">
   <div>
   <div class="eyebrow">연구부 · 지필평가 원안</div>
-  <h1>연구부 원패스</h1>
+  <h1 class="logo"><span class="sr">연구부 원패스</span>
+    <svg viewBox="0 0 460 150" aria-hidden="true">
+      <g class="lg-speed">
+        <line x1="6" y1="84" x2="70" y2="84"/><line x1="22" y1="106" x2="82" y2="106"/><line x1="0" y1="128" x2="58" y2="128"/>
+      </g>
+      <g class="lg-in">
+        <rect class="lg-tag" x="96" y="2" width="96" height="34" rx="17"/>
+        <text class="lg-small" x="144" y="27" text-anchor="middle">연구부</text>
+        <rect class="lg-pen" x="94" y="104" width="300" height="36" rx="10"/>
+        <text class="lg-big" x="90" y="138">원패스</text>
+        <path class="lg-star" d="M408 52l6 14 15 2-11 10 3 15-13-8-13 8 3-15-11-10 15-2z"/>
+      </g>
+    </svg>
+  </h1>
   <p class="lead">시험지 원안을 <span class="pen">만들고, 여러 AI가 직접 풀어 보며 검증</span>하는 일까지 한 번에. 선생님은 Claude에게 말로 부탁만 하시면 됩니다.</p>
   </div>
   <div class="boss" role="img" aria-label="빨간 후리스를 입은 마른 체구의 곱슬머리 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
-    <svg viewBox="0 0 220 300">
+    <svg viewBox="0 0 220 290">
       <!-- 말풍선 -->
       <g class="b-bubble">
-        <path class="bub" d="M118 12h88a10 10 0 0 1 10 10v40a10 10 0 0 1-10 10h-58l-18 16 4-16h-16a10 10 0 0 1-10-10V22a10 10 0 0 1 10-10z"/>
-        <rect class="bubhl" x="126" y="40" width="74" height="18" rx="4"/>
-        <text class="bubt" x="163" y="55" text-anchor="middle" font-size="23">패스!</text>
+        <path class="bub" d="M150 4h58a10 10 0 0 1 10 10v28a10 10 0 0 1-10 10h-34l-16 14 3-14h-11a10 10 0 0 1-10-10V14a10 10 0 0 1 10-10z"/>
+        <rect class="bubhl" x="150" y="25" width="58" height="15" rx="4"/>
+        <text class="bubt" x="179" y="38" text-anchor="middle" font-size="20">패스!</text>
       </g>
       <!-- 놀람 줄 -->
-      <g class="b-zap" style="transform-origin:96px 70px">
-        <line class="zap" x1="58" y1="58" x2="46" y2="46"/>
-        <line class="zap" x1="54" y1="76" x2="38" y2="74"/>
-        <line class="zap" x1="132" y1="50" x2="142" y2="38"/>
+      <g class="b-zap" style="transform-origin:108px 92px">
+        <line class="zap" x1="52" y1="62" x2="40" y2="50"/>
+        <line class="zap" x1="46" y1="84" x2="30" y2="82"/>
+        <line class="zap" x1="50" y1="106" x2="36" y2="114"/>
       </g>
       <g class="b-body">
-        <!-- 다리 (마른 체구) -->
-        <path class="pants ol" d="M86 196h20l-2 92h-14zM110 196h20l-4 92h-14z"/>
-        <path class="ln" d="M86 288h-10M126 288h10"/>
-        <!-- 몸통 -->
-        <path class="shirt ol" d="M84 124c0-8 8-12 24-12s24 4 24 12v76H84z"/>
-        <!-- 후리스: 세운 깃과 지퍼 -->
-        <path class="shirt ol" d="M97 112l11 10 11-10 3 10-14 8-14-8z"/>
-        <path class="zip" d="M108 130v66M104 136h8"/>
-        <!-- 왼팔(그림 왼쪽) -->
-        <g class="b-armL" style="transform-origin:86px 128px">
-          <path class="shirt ol" d="M86 126l-10 4-6 58 9 1 7-50z"/>
-          <circle class="skin ol" cx="74" cy="194" r="6"/>
+        <!-- 짧은 다리와 동글한 신발 -->
+        <path class="pants ol" d="M90 214h15l-1 40h-12zM111 214h15l-2 40h-12z"/>
+        <ellipse class="hair" cx="96" cy="258" rx="11" ry="6"/><ellipse class="hair" cx="120" cy="258" rx="11" ry="6"/>
+        <!-- 몸통: 빨간 후리스 -->
+        <path class="shirt ol" d="M84 150c0-10 10-16 24-16s24 6 24 16v62c0 4-4 6-8 6H92c-4 0-8-2-8-6z"/>
+        <path class="shirt ol" d="M97 134l11 9 11-9 3 9-14 8-14-8z"/>
+        <path class="zip" d="M108 152v62M104 158h8"/>
+        <!-- 팔 -->
+        <g class="b-armL">
+          <path class="shirt ol" d="M88 146l-10 4-5 40 9 1 6-34z"/>
+          <circle class="skin ol" cx="77" cy="196" r="7"/>
         </g>
-        <!-- 오른팔과 보고서 -->
-        <g class="b-armR" style="transform-origin:130px 128px">
-          <path class="shirt ol" d="M130 126l10 4 6 58-9 1-7-50z"/>
-          <circle class="skin ol" cx="142" cy="194" r="6"/>
+        <g class="b-armR">
+          <path class="shirt ol" d="M128 146l10 4 5 40-9 1-6-34z"/>
+          <circle class="skin ol" cx="139" cy="196" r="7"/>
         </g>
         <g class="b-paper">
-          <rect class="paper" x="132" y="160" width="34" height="42" rx="3" transform="rotate(8 149 181)"/>
-          <path class="okm" d="M140 182l6 6 12-14" transform="rotate(8 149 181)"/>
+          <rect class="paper" x="134" y="168" width="32" height="40" rx="4" transform="rotate(8 150 188)"/>
+          <path class="okm" d="M142 188l6 6 11-13" transform="rotate(8 150 188)"/>
         </g>
-        <!-- 목·머리 -->
-        <rect class="skin ol" x="102" y="100" width="12" height="14" rx="3"/>
-        <ellipse class="skin ol" cx="108" cy="72" rx="26" ry="32"/>
+        <!-- 큰 머리 -->
+        <ellipse class="skin ol" cx="108" cy="94" rx="40" ry="38"/>
         <!-- 곱슬머리 -->
         <g class="hair">
-          <circle cx="86" cy="58" r="9"/><circle cx="94" cy="46" r="10"/><circle cx="107" cy="41" r="11"/>
-          <circle cx="121" cy="45" r="10"/><circle cx="131" cy="56" r="9"/><circle cx="82" cy="70" r="6"/>
-          <circle cx="135" cy="68" r="6"/><circle cx="100" cy="52" r="8"/><circle cx="116" cy="52" r="8"/>
+          <circle cx="72" cy="80" r="11"/><circle cx="78" cy="64" r="12"/><circle cx="92" cy="54" r="13"/>
+          <circle cx="108" cy="50" r="13"/><circle cx="124" cy="54" r="13"/><circle cx="138" cy="64" r="12"/>
+          <circle cx="144" cy="80" r="11"/><circle cx="100" cy="64" r="10"/><circle cx="116" cy="64" r="10"/>
+          <circle cx="86" cy="70" r="9"/><circle cx="130" cy="70" r="9"/>
         </g>
+        <!-- 볼터치 -->
+        <ellipse class="blush" cx="84" cy="108" rx="8" ry="5"/><ellipse class="blush" cx="132" cy="108" rx="8" ry="5"/>
         <!-- 눈썹 -->
-        <g class="b-brow"><path class="ln" d="M90 64l11-2M115 62l11 2"/></g>
-        <!-- 눈 (안경 없음) -->
-        <ellipse class="b-eye hair" cx="97" cy="74" rx="3" ry="3.4"/>
-        <ellipse class="b-eye hair" cx="119" cy="74" rx="3" ry="3.4"/>
-        <path class="ln" d="M108 76l-2 7h4"/>
+        <g class="b-brow"><path class="ln" d="M88 82q6-3 11 0M117 82q6-3 11 0"/></g>
+        <!-- 반짝이는 눈 -->
+        <g class="b-eye" style="transform-origin:94px 96px"><ellipse class="hair" cx="94" cy="96" rx="5" ry="6"/><circle class="shine" cx="96" cy="93" r="1.8"/></g>
+        <g class="b-eye" style="transform-origin:122px 96px"><ellipse class="hair" cx="122" cy="96" rx="5" ry="6"/><circle class="shine" cx="124" cy="93" r="1.8"/></g>
         <!-- 입: 평소 / 외침 -->
-        <path class="b-calm ln" d="M101 91q7 4 14 0"/>
-        <ellipse class="b-shout hair" cx="108" cy="92" rx="7" ry="8"/>
+        <path class="b-calm ln" d="M102 110q6 5 12 0"/>
+        <path class="b-shout mouth ol" d="M99 108q9-3 18 0q0 13-9 13t-9-13z"/>
       </g>
     </svg>
   </div>

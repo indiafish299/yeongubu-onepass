@@ -8,6 +8,7 @@
   --pen:#fff06a; --pen-ink:#1f2a37; --accent:#1f5d8c; --ok:#2f7a45; --warn:#9a5b00;
   --display:"Gowun Batang","Batang",serif; --body:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   --mono:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --skin:#f2d0b0; --hair:#2c2a28;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --paper:#15181c; --ink:#e8eae4; --mut:#a2a8ae; --line:#2e333a; --card:#1c2026;
@@ -85,13 +86,116 @@ details p{margin:8px 0 0;color:var(--mut)}
 .safe li{padding-left:22px;position:relative}
 .safe li::before{content:"";position:absolute;left:2px;top:.75em;width:10px;height:10px;border-radius:2px;background:var(--pen)}
 footer{padding-top:28px;color:var(--mut);font-size:.88rem}
+
+/* 연구부장님: 보고서를 보다가 놀라서 「패스!」 */
+.intro{display:grid;grid-template-columns:1fr 210px;gap:18px;align-items:end}
+.intro>div{min-width:0;display:grid;gap:14px}
+@media (max-width:620px){.intro{grid-template-columns:1fr}.boss{max-width:220px;justify-self:center}}
+.boss svg{display:block;width:100%;height:auto;overflow:visible}
+.boss .skin{fill:var(--skin)} .boss .hair{fill:var(--hair)} .boss .shirt{fill:var(--card)}
+.boss .pants{fill:var(--accent)} .boss .tie{fill:var(--accent)}
+.boss .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.boss .ol{stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round}
+.boss .paper{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.boss .okm{fill:none;stroke:var(--ok);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.boss .bub{fill:var(--card);stroke:var(--ink);stroke-width:2.4}
+.boss .bubhl{fill:var(--pen)}
+.boss .bubt{font-family:var(--display);font-weight:700;fill:var(--pen-ink)}
+.boss .zap{stroke:var(--warn);stroke-width:3;stroke-linecap:round}
+.boss g,.boss path,.boss ellipse{transform-box:fill-box}
+.b-body{animation:jump 4.2s ease-in-out infinite;transform-origin:50% 100%}
+.boss .b-armL,.boss .b-armR{transform-box:view-box}  /* 어깨(그림 좌표)를 축으로 돈다 */
+.b-armL{transform-origin:86px 128px;animation:armL 4.2s ease-in-out infinite}
+.b-armR{transform-origin:130px 128px;animation:armR 4.2s ease-in-out infinite}
+.boss{overflow:hidden;padding-top:4px}
+/* 한 칸짜리 그리드도 긴 한 줄(설치 명령) 때문에 넓어지지 않게 */
+header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
+.b-brow{animation:brow 4.2s ease-in-out infinite}
+.b-eye{transform-origin:50% 50%;animation:eye 4.2s ease-in-out infinite}
+.b-calm{animation:calm 4.2s steps(1) infinite}
+.b-shout{animation:shout 4.2s steps(1) infinite}
+.b-bubble{transform-origin:10% 90%;animation:bub 4.2s cubic-bezier(.3,1.6,.5,1) infinite}
+.b-zap{animation:zap 4.2s ease-out infinite}
+.b-paper{transform-origin:50% 100%;animation:paper 4.2s ease-in-out infinite}
+@keyframes jump{0%,38%{transform:none}46%{transform:translateY(-14px) scaleY(1.03)}54%,88%{transform:translateY(-4px)}96%,100%{transform:none}}
+@keyframes armL{0%,38%{transform:rotate(0)}48%,88%{transform:rotate(118deg)}96%,100%{transform:rotate(0)}}
+@keyframes armR{0%,38%{transform:rotate(0)}48%,88%{transform:rotate(-128deg)}96%,100%{transform:rotate(0)}}
+@keyframes brow{0%,38%{transform:none}46%,88%{transform:translateY(-6px)}96%,100%{transform:none}}
+@keyframes eye{0%,38%{transform:scale(1)}46%,88%{transform:scale(1.9)}96%,100%{transform:scale(1)}}
+@keyframes calm{0%{opacity:1}42%{opacity:0}92%{opacity:1}}
+@keyframes shout{0%{opacity:0}42%{opacity:1}92%{opacity:0}}
+@keyframes bub{0%,42%{transform:scale(0);opacity:0}52%{transform:scale(1);opacity:1}88%{transform:scale(1);opacity:1}94%,100%{transform:scale(.6);opacity:0}}
+@keyframes zap{0%,42%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1.1)}70%,100%{opacity:0;transform:scale(1.25)}}
+@keyframes paper{0%,20%{transform:none}30%,38%{transform:translateY(-6px) rotate(-4deg)}48%,88%{transform:translate(0,-38px) rotate(10deg)}96%,100%{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .b-body,.b-armL,.b-armR,.b-brow,.b-eye,.b-paper,.b-zap{animation:none}
+  .b-calm{animation:none;opacity:0}.b-shout{animation:none;opacity:1}
+  .b-bubble{animation:none;opacity:1;transform:none}
+  .b-armL{transform:rotate(118deg)}.b-armR{transform:rotate(-128deg)}.b-eye{transform:scale(1.9)}.b-brow{transform:translateY(-6px)}
+}
 </style>
 
 <div class="wrap">
 <header>
+  <div class="intro">
+  <div>
   <div class="eyebrow">연구부 · 지필평가 원안</div>
   <h1>연구부 원패스</h1>
   <p class="lead">시험지 원안을 <span class="pen">만들고, 여러 AI가 직접 풀어 보며 검증</span>하는 일까지 한 번에. 선생님은 Claude에게 말로 부탁만 하시면 됩니다.</p>
+  </div>
+  <div class="boss" role="img" aria-label="마른 체구에 안경을 쓴 연구부장님이 검증 보고서를 보다가 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
+    <svg viewBox="0 0 220 300">
+      <!-- 말풍선 -->
+      <g class="b-bubble">
+        <path class="bub" d="M118 12h88a10 10 0 0 1 10 10v40a10 10 0 0 1-10 10h-58l-18 16 4-16h-16a10 10 0 0 1-10-10V22a10 10 0 0 1 10-10z"/>
+        <rect class="bubhl" x="126" y="40" width="74" height="18" rx="4"/>
+        <text class="bubt" x="163" y="55" text-anchor="middle" font-size="23">패스!</text>
+      </g>
+      <!-- 놀람 줄 -->
+      <g class="b-zap" style="transform-origin:96px 70px">
+        <line class="zap" x1="58" y1="58" x2="46" y2="46"/>
+        <line class="zap" x1="54" y1="76" x2="38" y2="74"/>
+        <line class="zap" x1="132" y1="50" x2="142" y2="38"/>
+      </g>
+      <g class="b-body">
+        <!-- 다리 (마른 체구) -->
+        <path class="pants ol" d="M86 196h20l-2 92h-14zM110 196h20l-4 92h-14z"/>
+        <path class="ln" d="M86 288h-10M126 288h10"/>
+        <!-- 몸통 -->
+        <path class="shirt ol" d="M84 124c0-8 8-12 24-12s24 4 24 12v76H84z"/>
+        <path class="tie ol" d="M104 114h8l3 8-5 52-5-52z"/>
+        <!-- 왼팔(그림 왼쪽) -->
+        <g class="b-armL" style="transform-origin:86px 128px">
+          <path class="shirt ol" d="M86 126l-10 4-6 58 9 1 7-50z"/>
+          <circle class="skin ol" cx="74" cy="194" r="6"/>
+        </g>
+        <!-- 오른팔과 보고서 -->
+        <g class="b-armR" style="transform-origin:130px 128px">
+          <path class="shirt ol" d="M130 126l10 4 6 58-9 1-7-50z"/>
+          <circle class="skin ol" cx="142" cy="194" r="6"/>
+        </g>
+        <g class="b-paper">
+          <rect class="paper" x="132" y="160" width="34" height="42" rx="3" transform="rotate(8 149 181)"/>
+          <path class="okm" d="M140 182l6 6 12-14" transform="rotate(8 149 181)"/>
+        </g>
+        <!-- 목·머리 -->
+        <rect class="skin ol" x="102" y="100" width="12" height="14" rx="3"/>
+        <ellipse class="skin ol" cx="108" cy="72" rx="26" ry="32"/>
+        <path class="hair ol" d="M82 66c0-22 12-32 27-32s26 10 26 30c-6-8-16-12-27-12s-20 6-26 14z"/>
+        <!-- 눈썹 -->
+        <g class="b-brow"><path class="ln" d="M90 60l12-2M114 58l12 2"/></g>
+        <!-- 안경 -->
+        <circle class="ln" cx="96" cy="72" r="9"/><circle class="ln" cx="120" cy="72" r="9"/><path class="ln" d="M105 72h6M87 70l-5-2M129 70l5-2"/>
+        <!-- 눈 -->
+        <ellipse class="b-eye hair" cx="96" cy="72" rx="2.6" ry="2.6"/>
+        <ellipse class="b-eye hair" cx="120" cy="72" rx="2.6" ry="2.6"/>
+        <!-- 입: 평소 / 외침 -->
+        <path class="b-calm ln" d="M101 91q7 4 14 0"/>
+        <ellipse class="b-shout hair" cx="108" cy="92" rx="7" ry="8"/>
+      </g>
+    </svg>
+  </div>
+  </div>
   <div class="stage" role="img" aria-label="정답에 형광펜이 그어지고, AI 검토자 네 명이 시험지를 풀어 확인 표시를 하고, 다시 볼 문항이 적힌 보고서가 나오는 그림">
     <svg viewBox="0 0 640 260">
       <rect class="sheet" x="14" y="14" width="196" height="232" rx="6"/>

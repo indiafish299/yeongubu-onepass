@@ -190,7 +190,7 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
   </h1>
   <p class="lead">시험지 원안을 <span class="pen">만들고, 여러 AI가 직접 풀어 보며 검증</span>하는 일까지 한 번에. 선생님은 Claude에게 말로 부탁만 하시면 됩니다.</p>
   </div>
-  <div class="boss" role="img" aria-label="연보라 복슬 후리스를 입고 일자 앞머리에 환하게 웃는 연구부장님이 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
+  <div class="boss" role="img" aria-label="연보라 복슬 후리스를 입고 약간 곱슬한 바가지 머리에 환하게 웃는 연구부장님이 깜짝 놀라 두 팔을 번쩍 들고 「패스!」라고 외치는 그림">
     <svg viewBox="0 0 220 290">
       <!-- 말풍선 -->
       <g class="b-bubble">
@@ -229,8 +229,13 @@ header,.steps,.feat,.safe{grid-template-columns:minmax(0,1fr)}
         <!-- 둥근 얼굴 -->
         <ellipse class="skin ol" cx="108" cy="100" rx="37" ry="35"/>
         <!-- 바가지 머리: 일자 앞머리 -->
-        <path class="hair ol" d="M71 96c-2-24 14-38 37-38s39 14 37 38c-2-3-4-5-6-5H77c-2 0-4 2-6 5z"/>
-        <path class="ln" style="stroke:var(--paper);stroke-width:1.4;opacity:.35" d="M86 70v14M98 66v18M110 65v19M122 67v17M132 72v12"/>
+        <!-- 바가지 머리, 약간 곱슬: 몽글한 윗선과 물결 앞머리 -->
+        <g class="hair">
+          <circle cx="78" cy="80" r="8"/><circle cx="86" cy="68" r="8"/><circle cx="98" cy="61" r="8"/>
+          <circle cx="111" cy="59" r="8"/><circle cx="124" cy="62" r="8"/><circle cx="135" cy="70" r="8"/><circle cx="141" cy="82" r="7"/>
+        </g>
+        <path class="hair ol" d="M71 96c-2-24 14-38 37-38s39 14 37 38q-3-6-8-4q-4 6-9 1q-4 6-9 1q-4 6-9 1q-4 6-9 1q-4 6-9 1q-4 6-9 1q-6-3-12 1z"/>
+        <path class="ln" style="stroke:var(--paper);stroke-width:1.4;opacity:.4" d="M86 76q3-4 6 0M100 70q3-4 6 0M114 70q3-4 6 0M127 76q3-4 6 0M93 84q3-3 6 0M120 84q3-3 6 0"/>
         <!-- 볼터치 -->
         <ellipse class="blush" cx="82" cy="114" rx="8" ry="5"/><ellipse class="blush" cx="134" cy="114" rx="8" ry="5"/>
         <!-- 눈썹(앞머리 바로 아래) -->

@@ -1,8 +1,9 @@
-﻿# 연구부 원패스 한 줄 설치 (윈도우)
+# 연구부 원패스 한 줄 설치 (윈도우)
 #   irm https://raw.githubusercontent.com/indiafish299/yeongubu-onepass/main/install.ps1 | iex
 # 하는 일: Claude 명령줄 도구 확인(없으면 공식 설치) → 원패스 플러그인 설치 → 파이썬·패키지 준비 → 점검.
 # 묻지 않고 진행한다. 몇 번 돌려도 같다(이미 있으면 건너뛰거나 최신으로 올린다).
 # 시험용: $env:ONEPASS_SOURCE 에 다른 저장소·폴더를 넣으면 거기서 설치한다.
+# 이 파일은 BOM 없는 UTF-8 이다(irm | iex 로 받을 때 BOM 이 첫 줄을 깨뜨린다). 로컬 시험은 Get-Content -Raw -Encoding UTF8 install.ps1 | iex
 # PowerShell 5.1 은 Stop 이면 프로그램이 stderr 에 쓰기만 해도 멈춘다 → Continue 로 두고 결과를 직접 확인한다
 $ErrorActionPreference = "Continue"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8

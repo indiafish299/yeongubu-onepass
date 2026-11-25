@@ -47,6 +47,11 @@ Say "3/3 파이썬과 검증 프로그램 준비 중"
 powershell -NoProfile -ExecutionPolicy Bypass -File $boot.FullName | ForEach-Object { "    $_" } | Where-Object { $_ -notmatch "@@JSON" }
 
 Write-Host ""
-Write-Host "다 됐습니다." -ForegroundColor Green
-Say "Claude 앱을 완전히 껐다가 다시 열고, Code 탭에서 「원패스 준비해 줘」라고 말해 주세요."
-Say "(AI 로그인과 검토자 고르기는 그때 Claude가 안내합니다)"
+$skill = Split-Path (Split-Path $boot.FullName)
+$eth = if ($env:EXAM_TOOLS_HOME) { $env:EXAM_TOOLS_HOME } else { Join-Path $HOME ".exam-tools" }
+Write-Host "다 됐습니다. 앱을 끄거나 다시 켤 필요는 없습니다." -ForegroundColor Green
+Say "Claude에게서 설치했다면: 이 대화에서 Claude가 바로 이어서 AI 로그인과 검토자 고르기를 안내합니다."
+Say "PowerShell에서 직접 설치했다면: Claude 앱 Code 탭에서 새 세션을 열고 「원패스 준비해 줘」라고 말해 주세요."
+Say "다음부터는 Code 탭에서 새 세션을 열면 원패스가 들어 있습니다."
+Write-Host ""
+Write-Host "[Claude에게] 이 대화에서 바로 이어서 준비를 진행하세요. $skill\SKILL.md 를 읽고 「순서」 2번부터 따르세요(1번 기본 준비는 끝났습니다. <SKILL_DIR>=$skill, <PYTHON>=$(Join-Path $eth 'venv\Scripts\python.exe')). 선생님께 앱을 끄거나 다시 켜라고 하지 마세요."

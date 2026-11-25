@@ -4,6 +4,7 @@
   doctor.py install [VENDORS] 쓰는 AI 의 명령줄 도구를 설치·업데이트 (claude, codex; 필요하면 node)
   doctor.py probe [VENDORS]   후보 모델을 아주 짧게 불러 보고 되는 것만 profile.json 의 검토자로 적는다
   doctor.py names 이름...      가릴 칸 자동 찾기에 쓸 학교명·선생님 이름을 적어 둔다
+  doctor.py rhwp [--force]    한글 파일 읽기 도구 rhwp 를 GitHub 공식 배포판에서 받아 깐다(해시가 맞을 때만)
 
 VENDORS: anthropic,openai,google 중 쉼표로. 없으면 로그인돼 있는 회사 + anthropic.
 결과는 사람이 읽는 표와 함께 마지막 줄에 JSON(@@JSON …)으로도 낸다.
@@ -91,12 +92,13 @@ def check():
         "python": sys.version.split()[0],
         "hangul": hangul(),
         "git": bool(which("git")), "node": bool(which("node")), "npm": bool(which("npm")),
-        "uv": bool(which("uv")),
+        "uv": bool(which("uv")), "rhwp": rhwp_state(),
         "home": str(H.HOME), "work": str(H.WORK),
         "reviewers": [f"{r['label']}({r['model']})" for r in H.reviewers()] if H.load_profile().get("reviewers") else [],
     }
     print(f"운영체제 {env['os']} · 파이썬 {env['python']} · 한글: {env['hangul'] or '없음(PDF 는 선생님이 한글에서 저장)'}")
-    print(f"git {'있음' if env['git'] else '없음'} · node {'있음' if env['node'] else '없음'} · uv {'있음' if env['uv'] else '없음'}")
+    print(f"git {'있음' if env['git'] else '없음'} · node {'있음' if env['node'] else '없음'} · uv {'있음' if env['uv'] else '없음'}"
+          f" · rhwp {env['rhwp']['version'] or '없음'}")
     for v, t in TOOL.items():
         s = tools[t]
         state = ("로그인됨" if s["login"] else "로그인 필요") if s["installed"] else "없음"
@@ -149,6 +151,98 @@ def install(args):
     print("@@JSON " + json.dumps({"installed": done, "vendors": vs}, ensure_ascii=False))
 
 
+def rhwp_state():
+    exe = H.rhwp_bin()
+    if not exe:
+        return {"installed": False, "path": "", "version": ""}
+    _, v = run([exe, "--version"], 30)
+    return {"installed": True, "path": exe, "version": v.strip().splitlines()[0][:40] if v.strip() else ""}
+
+
+def rhwp_asset():
+    m = platform.machine().lower()
+    arch = "aarch64" if m in ("arm64", "aarch64") else "x86_64"
+    if WIN:
+        return "windows-x86_64.zip"
+    return f"{'macos' if sys.platform == 'darwin' else 'linux'}-{arch}.tar.gz"
+
+
+def rhwp_install(args):
+    """rhwp 를 GitHub 공식 배포판에서 받아 ~/.exam-tools/rhwp 에 둔다. 해시가 맞을 때만 깐다.
+    이미 같은 판이 있으면 건너뛴다. 실패해도 오류로 멈추지 않는다(한글이 있으면 rhwp 없이도 된다)."""
+    import hashlib
+    import tarfile
+    import tempfile
+    import urllib.request
+    import zipfile
+    st = rhwp_state()
+    if st["installed"] and H.RHWP_VERSION in st["version"] and "--force" not in args:
+        print(f"rhwp 이미 있음 ({st['version']})")
+        return
+    asset = rhwp_asset()
+    want = H.RHWP_SHA256.get(asset)
+    if not want:
+        print(f"rhwp: 이 컴퓨터({asset})용 배포판이 없어 건너뜀")
+        return
+    name = f"rhwp-{H.RHWP_VERSION}-{asset}"
+    url = f"https://github.com/edwardkim/rhwp/releases/download/{H.RHWP_VERSION}/{name}"
+    print(f"rhwp {H.RHWP_VERSION} 설치 중 (한글 파일 읽기 도구, GitHub 공식 배포판 약 30MB)")
+    try:
+        with tempfile.TemporaryDirectory() as td:
+            f = Path(td) / name
+            req = urllib.request.Request(url, headers={"User-Agent": "onepass-setup"})
+            with urllib.request.urlopen(req, timeout=300) as r, open(f, "wb") as o:
+                shutil.copyfileobj(r, o)
+            got = hashlib.sha256(f.read_bytes()).hexdigest()
+            if got != want:
+                print(f"rhwp: 받은 파일의 해시가 달라 설치하지 않음 (기대 {want[:12]}…, 받음 {got[:12]}…)")
+                return
+            out = Path(td) / "x"
+            if asset.endswith(".zip"):
+                with zipfile.ZipFile(f) as z:
+                    for n in z.namelist():
+                        if n.startswith(("/", "\\")) or ".." in Path(n).parts:
+                            print("rhwp: 묶음 안 경로가 이상해 설치하지 않음")
+                            return
+                    z.extractall(out)
+            else:
+                with tarfile.open(f) as t:
+                    t.extractall(out, filter="data")
+            src = out / "rhwp"
+            if not (src / ("rhwp.exe" if WIN else "rhwp")).exists():
+                print("rhwp: 묶음에서 실행 파일을 못 찾음")
+                return
+            if H.RHWP_DIR.exists():
+                shutil.rmtree(H.RHWP_DIR, ignore_errors=True)
+            H.HOME.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(src, H.RHWP_DIR)
+            if not WIN:
+                os.chmod(H.RHWP_DIR / "rhwp", 0o755)
+    except Exception as e:
+        print(f"rhwp 설치 실패: {type(e).__name__}: {str(e)[:160]} (한글이 있으면 없어도 된다)")
+        return
+    # 터미널에서도 `rhwp` 로 부를 수 있게 ~/.local/bin 에 이어 둔다(uv 가 PATH 에 넣어 둔 곳)
+    lb = Path.home() / ".local" / "bin"
+    try:
+        lb.mkdir(parents=True, exist_ok=True)
+        if WIN:
+            exe = H.RHWP_DIR / "rhwp.exe"
+            try:  # 사용자 이름이 한글이어도 깨지지 않게 %USERPROFILE% 로 적는다
+                exe_s = "%USERPROFILE%\\" + str(exe.relative_to(Path.home()))
+            except ValueError:
+                exe_s = str(exe)
+            (lb / "rhwp.cmd").write_text(f'@"{exe_s}" %*\r\n', encoding="mbcs", errors="replace")
+        else:
+            link = lb / "rhwp"
+            if link.is_symlink() or link.exists():
+                link.unlink()
+            link.symlink_to(H.RHWP_DIR / "rhwp")
+    except Exception:
+        pass
+    st = rhwp_state()
+    print(f"rhwp 설치됨 ({st['version']}) — {st['path']}")
+
+
 def probe(args):
     tools = {t: tool_state(t) for t in TOOL.values()}
     vs = vendors_arg(args, tools)
@@ -190,4 +284,5 @@ def names(args):
 
 if __name__ == "__main__":
     cmd, rest = (sys.argv[1], sys.argv[2:]) if len(sys.argv) > 1 else ("check", [])
-    {"check": lambda a: check(), "install": install, "probe": probe, "names": names}[cmd](rest)
+    {"check": lambda a: check(), "install": install, "probe": probe, "names": names,
+     "rhwp": rhwp_install}[cmd](rest)

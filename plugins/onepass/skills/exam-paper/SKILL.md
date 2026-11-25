@@ -13,7 +13,7 @@ description: "학교 지필평가 원안(중간·기말 시험지) 제작 — �
 ### 0-1. PC 환경 — `~/.exam-tools/venv` 가 없으면 먼저 **exam-setup**(파이썬·패키지를 알아서 설치). 그다음 `scripts/check_env.ps1` 로 한글 자동화를 확인한다
 | 결과 | 그에 따른 진행 |
 |---|---|
-| 한글(HWP) 자동화 없음 (Mac, 한글 미설치) | 문항·검증·정답표까지 하고, 원안은 HTML/PDF 초안으로 드림 → 한글 있는 PC에서 4단계 |
+| 한글(HWP) 자동화 없음 (Mac, 한글 미설치) | 문항·검증·정답표까지 하고, 원안은 HTML/PDF 초안으로 드림 → 한글 있는 PC에서 4단계. 지난 원안·학교 양식은 **rhwp**(exam-setup 이 깔아 둠)로 읽는다: `rhwp export-text`(글자), `rhwp export-png`(쪽 그림), `rhwp dump`(글꼴·문단 구조). 머리말 문구 바꾸기 정도는 `rhwp edit replace-text` 로 사본에 할 수 있지만, 조판(2단·자간·단 나눔)은 한글에서 한다 |
 | Python 모듈 없음 | 설치는 선생님 동의 후 `pip install pywin32 pypdfium2 pillow matplotlib`, 또는 uv로 대체 |
 | 브라우저 자동화 도구(ego-browser, Claude in Chrome 등) 없음 | 교과서 사이트 자료는 선생님이 직접 내려받아 폴더를 알려 주심 |
 | 다른 AI 검토 도구(agy 등) | exam-verify에서 사용 여부 결정 |

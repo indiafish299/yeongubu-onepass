@@ -16,7 +16,7 @@ description: 연구부 원패스(시험지 제작·검증 도구)를 선생님 P
 1. **기본 준비 (자동):**
    - 윈도우: `powershell -NoProfile -ExecutionPolicy Bypass -File "<SKILL_DIR>\scripts\bootstrap.ps1"`
    - 맥: `bash "<SKILL_DIR>/scripts/bootstrap.sh"`
-   uv(파이썬 관리 도구) → 파이썬 3.12 가상환경 → 패키지 → 점검표. 마지막 줄 `PYTHON=…`이 앞으로 쓸 파이썬이다.
+   uv(파이썬 관리 도구) → 파이썬 3.12 가상환경 → 패키지 → rhwp(한글 없이 한글 파일을 읽는 공개 도구, GitHub 공식 배포판을 받아 **박아 둔 해시가 맞을 때만** `~/.exam-tools/rhwp` 에 깐다. 따로 부를 땐 `doctor.py rhwp`) → 점검표. 마지막 줄 `PYTHON=…`이 앞으로 쓸 파이썬이다.
    점검표의 `@@JSON` 줄에 claude·codex·agy 설치·로그인 상태가 있다.
 
 2. **어떤 AI 를 쓰는지 (❓ 필요할 때만 한 번):** Claude 는 지금 쓰고 있으니 늘 있다. codex(ChatGPT)·agy(Gemini)가 이미 로그인돼 있으면 묻지 않는다.

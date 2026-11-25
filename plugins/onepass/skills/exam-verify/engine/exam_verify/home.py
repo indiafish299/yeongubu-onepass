@@ -68,3 +68,25 @@ def fast_model(model: str) -> str:
         if model.startswith("gemini-") and model.endswith(suf):
             return model[: -len(suf)] + "-low"
     return model
+
+
+# rhwp(한글 파일을 한글 없이 읽고 쪽 그림·글자로 뽑는 공개 도구, MIT, github.com/edwardkim/rhwp).
+# 판과 해시를 여기 박아 둔다: GitHub 에서 받은 묶음이 이 해시와 다르면 깔지 않는다.
+RHWP_VERSION = "v0.9.1"
+RHWP_SHA256 = {
+    "windows-x86_64.zip": "2214c5b07408f18417e450e6e8f44a9f0a4cd917b09839f3ec3577ba19945c9c",
+    "macos-aarch64.tar.gz": "a8217038f2d2ef33b1fcf215cc570faacb09c8d53366f2aaa88701ecb245c125",
+    "macos-x86_64.tar.gz": "15ce4148235377b02275fbe16929cb16faac8d151fcd755c6facd58ecafc4f2e",
+    "linux-x86_64.tar.gz": "9283dd9ecd3182ddb50eeba9a2f26d2d23b5386e39defb081e52a3706916e65d",
+    "linux-aarch64.tar.gz": "85d17b51b96badadafd4a1f890c0d182a44d3100ff1a9f41c9235bf901f4cdd8",
+}
+RHWP_DIR = HOME / "rhwp"
+
+
+def rhwp_bin() -> str:
+    """rhwp 실행 파일. 원패스가 깐 것(~/.exam-tools/rhwp) → PATH 순. 없으면 빈 문자열."""
+    import shutil
+    exe = RHWP_DIR / ("rhwp.exe" if os.name == "nt" else "rhwp")
+    if exe.exists():
+        return str(exe)
+    return shutil.which("rhwp") or ""

@@ -15,7 +15,7 @@
 
 3. 앱을 껐다 켜고 「원패스 준비해 줘」라고 말합니다(AI 로그인·검토자 고르기).
 
-설치 스크립트(`install.ps1`, `install.sh`)가 하는 일: Claude 명령줄 도구 확인(없으면 공식 설치) → `claude plugin install onepass --marketplace indiafish299/yeongubu-onepass` → 파이썬·패키지 준비(`exam-setup/scripts/bootstrap`). 다시 실행하면 최신판으로 올린다.
+설치 스크립트(`install.ps1`, `install.sh`)가 하는 일: Claude 명령줄 도구 확인(없으면 공식 설치) → `claude plugin install onepass --marketplace indiafish299/yeongubu-onepass` → 파이썬·패키지 준비와 [rhwp](https://github.com/edwardkim/rhwp)(한글 파일 읽기 도구, MIT — 공식 배포판을 받아 판·SHA-256 해시를 확인한 뒤 `~/.exam-tools/rhwp` 에 둔다)까지(`exam-setup/scripts/bootstrap`). 다시 실행하면 최신판으로 올린다.
 
 | 스킬 | 하는 일 |
 |---|---|

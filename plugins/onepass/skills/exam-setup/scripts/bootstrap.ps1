@@ -1,4 +1,4 @@
-﻿# exam-tools 처음 준비 (윈도우): uv → 파이썬 가상환경(~/.exam-tools/venv) → 패키지 → 점검.
+﻿# exam-tools 처음 준비 (윈도우): uv → 파이썬 가상환경(~/.exam-tools/venv) → 패키지 → rhwp(한글 파일 읽기) → 점검.
 # 사람에게 묻지 않고 바로 설치한다. 몇 번 돌려도 같다(이미 있으면 건너뜀).
 # usage: powershell -ExecutionPolicy Bypass -File bootstrap.ps1
 $ErrorActionPreference = "Stop"
@@ -29,5 +29,6 @@ if (-not (Test-Path "$Venv\Scripts\python.exe")) {
 }
 Write-Output "패키지 설치 중"
 & $uv pip install --quiet --python "$Venv\Scripts\python.exe" -r "$Engine\requirements.txt" pywin32 matplotlib numpy
+& "$Venv\Scripts\python.exe" -B (Join-Path $PSScriptRoot "doctor.py") rhwp
 & "$Venv\Scripts\python.exe" -B (Join-Path $PSScriptRoot "doctor.py") check
 Write-Output "PYTHON=$Venv\Scripts\python.exe"

@@ -9,7 +9,7 @@
       "name": "onepass",
       "source": "./plugins/onepass",
       "description": "연구부 원패스: 처음 준비(exam-setup), 원안 제작(exam-paper), 시험지 검증(exam-verify)",
-      "version": "2.1.0"
+      "version": "2.2.0"
     }
   ]
 }

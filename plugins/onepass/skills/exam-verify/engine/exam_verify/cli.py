@@ -101,6 +101,8 @@ def cmd_prepare(a):
     if yellow_pages:
         print(f"⚠ 노란 형광 표시가 {yellow_pages}쪽에 있었다(정답 표시로 보임). "
               + ("그대로 뒀다." if a.keep_yellow else "흰색으로 지웠다. 지워졌는지 눈으로 확인할 것."))
+    print("")
+    form_check(d)  # 이 PC 안에서 스크립트로만 본다(보내는 것 없음)
     print("가린 이미지를 선생님이 확인한 뒤 approve 를 돌린다. 그 전에는 run 이 거부한다.")
 
 
@@ -127,6 +129,32 @@ def write_text(d: Path, pdf, mask_items) -> bool:
     else:
         f.unlink(missing_ok=True)
     return bool(t)
+
+
+def form_check(d: Path, quiet=False) -> dict:
+    """양식 점검(스크립트, AI 없음): 원본 PDF 의 글자·위치로 번호·기호 순서·선지 배열·배치를 본다. form.json 에 남긴다."""
+    from exam_verify import form
+    meta = json.loads((d / "meta.json").read_text())
+    ans = None
+    af = d / "answers.json"
+    if af.exists():
+        kd = json.loads(af.read_text())
+        ans = {norm_q(k): v for k, v in kd.get("answers", {}).items()} if kd.get("confirmed") else None
+    try:
+        res = form.check(Path(meta["pdf"]).expanduser(), ans)
+    except Exception as ex:  # 양식 점검이 안 돼도 검증은 이어 간다
+        res = {"ok": False, "why": f"점검 실패: {type(ex).__name__}: {str(ex)[:120]}", "findings": [], "stats": {}}
+    (d / "form.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))
+    if not quiet:
+        print(form.text(res))
+    return res
+
+
+def cmd_form(a):
+    d = wd(a.name)
+    if not (d / "meta.json").exists():
+        sys.exit("먼저 prepare 를 돌린다")
+    form_check(d)
 
 
 def cmd_text(a):
@@ -426,6 +454,7 @@ def cmd_run(a):
             "models": models, "model_ids": {m: res[m]["solve"].get("model_reported") or res[m]["solve"].get("model_id")
                                             for m in models},
             "failed": failed, "has_key": bool(key), "fast": a.fast, "rows": rows,
+            "form": form_check(d, quiet=True),
             "page_hashes": [hashlib.sha256(p.read_bytes()).hexdigest()[:12] for p in pages]}
     report.mark_new(data, prev)
     (d / "report.json").write_text(json.dumps(data, ensure_ascii=False, indent=1))
@@ -465,6 +494,8 @@ def main():
     p.add_argument("--no-auto-mask", action="store_true", help="가릴 칸을 자동으로 찾지 않는다")
     p.add_argument("--dpi", type=int, default=200); p.set_defaults(fn=cmd_prepare)
     p = sub.add_parser("text"); p.add_argument("name"); p.set_defaults(fn=cmd_text)
+    p = sub.add_parser("form", help="양식 점검만(번호·기호 순서·선지 배열·배치, AI 없음)")
+    p.add_argument("name"); p.set_defaults(fn=cmd_form)
     p = sub.add_parser("pdf", help="한글 원안 → PDF (윈도우, 숨은 채)"); p.add_argument("hwp"); p.add_argument("out")
     p.set_defaults(fn=cmd_pdf)
     p = sub.add_parser("answers", help="정답·배점표 md → answers.json (확인 뒤 --confirm)")

@@ -51,6 +51,7 @@ def summary_line(data) -> str:
     rows = data["rows"]
     return (f"문항 {len(rows)}개 · 정답표와 어긋난 문항 {sum(1 for r in rows if r['mismatch'])}개 · "
             f"지적 {sum(len(r['issues']) for r in rows)}건"
+            + (f" · 양식 {len(data['form']['findings'])}건" if data.get("form", {}).get("ok") else "")
             + (f" · ⚠ 빠진 실행: {', '.join(data['failed'])}" if data["failed"] else ""))
 
 
@@ -75,7 +76,48 @@ def plain(data) -> str:
     li.append("꼭 다시 볼 문항(복수 정답·조건 부족·범위 밖 지적을 여러 모델이 함께 짚었거나 반박을 이겨 냄): "
               + (", ".join(f"{q}번" for q in serious) if serious else "없음")
               + (f" · 가볍게 볼 문항: {', '.join(q + '번' for q in other)}" if other else ""))
+    fm = data.get("form") or {}
+    if fm.get("ok"):
+        fx = [f for f in fm["findings"] if f["level"] == "고칠 것"]
+        ck = [f for f in fm["findings"] if f["level"] == "확인"]
+        qs = lambda fs: ", ".join(dict.fromkeys(f["q"] + "번" for f in fs if f["q"])) or "문서 전체"
+        li.append("양식 점검(스크립트): " + ("걸린 것 없음" if not fm["findings"] else
+                  (f"고칠 것 {len(fx)}건({qs(fx)})" if fx else "고칠 것 없음")
+                  + (f" · 확인할 것 {len(ck)}건({qs(ck)})" if ck else "")))
     return "<div class='card'><h3>한눈에</h3><ul>" + "".join(f"<li>{e(x)}</li>" for x in li) + "</ul></div>"
+
+
+FORM_CLS = {"고칠 것": "bad", "확인": "warn", "참고": "mut"}
+
+
+def _form_li(f):
+    return (f"<li><span class='{FORM_CLS.get(f['level'], '')}'><b>{e(f['level'])}</b></span> "
+            + (f"<b>{e(f['q'])}번</b> " if f["q"] else "")
+            + f"<span class='chip'>{e(f['kind'])}</span> {e(f['msg'])}</li>")
+
+
+def form_section(data) -> str:
+    fm = data.get("form")
+    if not fm:
+        return ""
+    h = ["<h2>양식 점검</h2><div class='note'>AI 없이 스크립트가 시험지 PDF 의 글자와 위치로 본 것이다(이 PC 밖으로 보내지 않음). "
+         "고치지는 않고 알리기만 한다 — 선지 순서를 바꾸면 정답 번호도 바뀌니 정답표와 함께 고친다.</div>"]
+    if not fm.get("ok"):
+        return "".join(h) + f"<div class='mut'>{e(fm.get('why', ''))}</div>"
+    st = fm.get("stats", {})
+    bits = [f"선택형 {st.get('items', 0)}문항"] + ([f"서답형 {st['essays']}"] if st.get("essays") else [])
+    if "body_line_mm" in st:
+        bits.append(f"줄 간격 본문 {st['body_line_mm']}mm · 선지 {st['choice_line_mm']}mm")
+    if "points_sum" in st:
+        bits.append(f"배점 합 {st['points_sum']:g}점")
+    if st.get("answer_count"):
+        bits.append("정답 " + " ".join(f"{'①②③④⑤'[int(k) - 1]}{v}" for k, v in st["answer_count"].items()))
+    h.append(f"<div class='mut'>{e(' · '.join(bits))}</div>")
+    if not fm["findings"]:
+        h.append("<div class='ok'>걸린 것 없음 — 번호·기호 순서, 선지 배열, 배치, 줄 간격을 봤다.</div>")
+    else:
+        h.append("<ul>" + "".join(_form_li(f) for f in fm["findings"]) + "</ul>")
+    return "".join(h)
 
 
 CSS = """
@@ -183,11 +225,17 @@ def render(data) -> str:
             why.append("<span class='mut'>지적은 모두 반박됨</span>")
         h.append(f"<li><a href='#q{e(r['q'])}'><b>{e(r['q'])}번</b></a> — {' · '.join(why)}</li>")
     h.append("</ol>" if top else "</ol><div class='mut'>올라온 것이 없다. 그래도 통과를 뜻하지는 않는다.</div>")
+    h.append(form_section(data))
     h.append("<h2>문항별</h2>")
+    fby = {}
+    for f in (data.get("form") or {}).get("findings", []):
+        fby.setdefault(f["q"], []).append(f)
     for r in rows:
         key = f"정답표 {e(str(r['key']))}" if r["key"] is not None else "정답표에 없음"
         h.append(f"<div class='card' id='q{e(r['q'])}'><h3>{e(r['q'])}번 <span class='mut'>· {key}</span></h3>")
         h.append(_answers(r, models))
+        if fby.get(r["q"]):
+            h.append("<div class='issue'><span class='sev'>양식</span><ul>" + "".join(_form_li(f) for f in fby[r["q"]]) + "</ul></div>")
         for i in sorted(r["issues"], key=lambda i: (i.get("verdict") == "refuted", -WEIGHT.get(i["severity"], 0))):
             h.append(_issue(i))
         h.append("</div>")

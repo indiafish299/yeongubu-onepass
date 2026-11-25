@@ -175,10 +175,13 @@ def rhwp_install(args):
     import tempfile
     import urllib.request
     import zipfile
-    st = rhwp_state()
-    if st["installed"] and H.RHWP_VERSION in st["version"] and "--force" not in args:
-        print(f"rhwp 이미 있음 ({st['version']})")
-        return
+    # 원패스 자리(~/.exam-tools/rhwp)에 고정한 판이 있을 때만 건너뛴다(PATH 의 다른 rhwp 는 판·출처를 모른다)
+    own = H.RHWP_DIR / ("rhwp.exe" if WIN else "rhwp")
+    if own.exists() and "--force" not in args:
+        _, v = run([str(own), "--version"], 30)
+        if H.RHWP_VERSION in v:
+            print(f"rhwp 이미 있음 ({v.strip()})")
+            return
     asset = rhwp_asset()
     want = H.RHWP_SHA256.get(asset)
     if not want:
